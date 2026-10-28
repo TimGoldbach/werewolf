@@ -25,6 +25,5 @@ apps/api/prisma/*.db
 *.log
 coverage/
 
-# backups
-ops/backups/*.sql
-ops/backups/*.sql.gz
+# instance data (configuration, secrets, branding, backups, certificates)
+instance/

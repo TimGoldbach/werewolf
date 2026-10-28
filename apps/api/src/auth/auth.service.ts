@@ -33,7 +33,10 @@ export class AuthService {
     }
   }
 
-  get isProd(): boolean {
+  /** Whether the session cookie gets the `Secure` flag (see SECURE_COOKIES). */
+  get secureCookies(): boolean {
+    const configured = this.config.get('SECURE_COOKIES', { infer: true })
+    if (configured) return configured === 'true'
     return this.config.get('NODE_ENV', { infer: true }) === 'production'
   }
 }

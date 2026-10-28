@@ -4,6 +4,6 @@
 **/.turbo
 .git
 **/*.log
-ops/backups
+instance
 **/.env
 **/.env.local

@@ -3,6 +3,7 @@
   "network": "Keine Verbindung zum Server",
   "NOT_AUTHENTICATED": "Nicht eingeloggt",
   "WRONG_PASSWORD": "Falsches Passwort",
+  "TOO_MANY_ATTEMPTS": "Zu viele falsche Versuche. Bitte warte ein paar Minuten.",
   "VALIDATION_FAILED": "Die Eingaben sind unvollständig oder ungültig.",
   "PLAYER_NOT_FOUND": "Spieler nicht gefunden.",
   "PLAYER_NAME_TAKEN": "Dieser Name ist bereits vergeben.",

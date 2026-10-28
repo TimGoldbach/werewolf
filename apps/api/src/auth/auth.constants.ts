@@ -5,11 +5,11 @@ export const IS_PUBLIC_KEY = 'isPublic'
 
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000
 
-export function sessionCookieOptions(isProd: boolean): CookieOptions {
+export function sessionCookieOptions(secure: boolean): CookieOptions {
   return {
     httpOnly: true,
     sameSite: 'lax',
-    secure: isProd,
+    secure,
     path: '/',
     maxAge: THIRTY_DAYS_MS,
   }

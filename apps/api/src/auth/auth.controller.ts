@@ -4,21 +4,32 @@ import type { Request, Response } from 'express'
 import { ZodValidationPipe } from '../common/zod-validation.pipe'
 import { SESSION_COOKIE, sessionCookieOptions } from './auth.constants'
 import { AuthService } from './auth.service'
+import { LoginThrottle } from './login-throttle'
 import { Public } from './public.decorator'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly auth: AuthService) {}
+  constructor(
+    private readonly auth: AuthService,
+    private readonly throttle: LoginThrottle,
+  ) {}
 
   @Public()
   @Post('login')
   async login(
     @Body(new ZodValidationPipe(loginSchema)) body: LoginInput,
+    @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ): Promise<{ authenticated: boolean }> {
+    const client = req.ip ?? 'unknown'
+    this.throttle.check(client)
     const ok = await this.auth.verifyPassword(body.password)
-    if (!ok) throw new UnauthorizedException(apiError('WRONG_PASSWORD', 'Wrong password.'))
-    res.cookie(SESSION_COOKIE, this.auth.issueToken(), sessionCookieOptions(this.auth.isProd))
+    if (!ok) {
+      this.throttle.fail(client)
+      throw new UnauthorizedException(apiError('WRONG_PASSWORD', 'Wrong password.'))
+    }
+    this.throttle.succeed(client)
+    res.cookie(SESSION_COOKIE, this.auth.issueToken(), sessionCookieOptions(this.auth.secureCookies))
     return { authenticated: true }
   }
 
@@ -30,7 +41,7 @@ export class AuthController {
 
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response): { authenticated: boolean } {
-    res.clearCookie(SESSION_COOKIE, { ...sessionCookieOptions(this.auth.isProd), maxAge: undefined })
+    res.clearCookie(SESSION_COOKIE, { ...sessionCookieOptions(this.auth.secureCookies), maxAge: undefined })
     return { authenticated: false }
   }
 }

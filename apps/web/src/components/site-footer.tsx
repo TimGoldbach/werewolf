@@ -21,6 +21,7 @@ export function SiteFooter({ className }: { className?: string }) {
       )}
     >
       <LanguageSwitcher />
+      <span>v{process.env.APP_VERSION}</span>
       {imprintUrl && (
         <a
           href={imprintUrl}

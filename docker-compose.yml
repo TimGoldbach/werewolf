@@ -1,3 +1,8 @@
+# Core stack: database, API, web app and nightly backups. How the web app is reached
+# comes from one overlay in compose/ (caddy.yml, port.yml or proxy-network.yml); the
+# CLI picks it via COMPOSE_FILE in instance/.env, which is linked to ./.env.
+name: werewolf
+
 services:
   db:
     image: postgres:16-alpine
@@ -15,7 +20,7 @@ services:
       retries: 10
 
   api:
-    # Production: prebuilt image from GHCR (deploy workflow). Locally: docker compose build.
+    # Prebuilt release image from GHCR; `docker compose build` builds it from this checkout.
     image: ${IMAGE_PREFIX:-ghcr.io/timgoldbach/werewolf}-api:${IMAGE_TAG:-latest}
     build:
       context: .
@@ -32,6 +37,8 @@ services:
       SESSION_TTL: ${SESSION_TTL:-30d}
       API_PORT: '3001'
       WEB_ORIGIN: ${WEB_ORIGIN:-http://localhost}
+      # false only when the app is served over plain HTTP (LAN mode)
+      SECURE_COOKIES: ${SECURE_COOKIES:-true}
       NODE_ENV: production
     expose:
       - '3001'
@@ -42,10 +49,6 @@ services:
       retries: 3
       # Migrations run on start
       start_period: 60s
-    networks:
-      default: {}
-      web:
-        aliases: [werewolf-api]
 
   web:
     image: ${IMAGE_PREFIX:-ghcr.io/timgoldbach/werewolf}-web:${IMAGE_TAG:-latest}
@@ -72,13 +75,6 @@ services:
       timeout: 5s
       retries: 3
       start_period: 30s
-    networks:
-      default: {}
-      web:
-        aliases: [werewolf-web]
-
-  # No proxy of its own: an existing reverse proxy on the external Docker network "web"
-  # terminates TLS and forwards the domain to werewolf-web:3000.
 
   backup:
     image: postgres:16-alpine
@@ -87,26 +83,22 @@ services:
       db:
         condition: service_healthy
     environment:
-      # libpq defaults, also used by the pre-deploy backup in ops/deploy.sh
+      # libpq defaults, also used by the CLI's on-demand backups
       PGHOST: db
       PGUSER: ${POSTGRES_USER:-werewolf}
       PGPASSWORD: ${POSTGRES_PASSWORD:-werewolf}
       PGDATABASE: ${POSTGRES_DB:-werewolf}
     volumes:
-      - ./ops/backups:/backups
+      - ./instance/backups:/backups
     entrypoint:
       - sh
       - -c
       - >
         while true; do
         pg_dump | gzip > /backups/werewolf-$$(date +%Y%m%d-%H%M%S).sql.gz;
-        find /backups -name '*.sql.gz' -mtime +14 -delete;
+        find /backups -name 'werewolf-*.sql.gz' -mtime +${BACKUP_RETENTION_DAYS:-14} -delete;
         sleep 86400;
         done
 
 volumes:
   pgdata:
-
-networks:
-  web:
-    external: true
