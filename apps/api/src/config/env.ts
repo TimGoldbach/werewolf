@@ -9,6 +9,8 @@ export const envSchema = z.object({
   API_PORT: z.coerce.number().int().positive().default(3001),
   WEB_ORIGIN: z.string().default('http://localhost:3000'),
   NODE_ENV: z.string().default('development'),
+  /** Mark the session cookie `Secure`; defaults to on in production. Off for plain-HTTP LAN setups. */
+  SECURE_COOKIES: z.enum(['true', 'false']).optional(),
 })
 
 export type Env = z.infer<typeof envSchema>

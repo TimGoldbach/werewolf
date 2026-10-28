@@ -60,67 +60,65 @@ Then open http://localhost:3000 and log in with the `GATE_PASSWORD` from `apps/a
 | `pnpm test` | Vitest (mainly `packages/shared`) |
 | `pnpm --filter @werewolf/api prisma:migrate` | Create a new migration |
 
-## Production (Docker Compose)
+## Self-hosting
 
-The Compose file runs `web`, `api`, `db` and a `backup` service. It expects a reverse
-proxy that terminates TLS on the external Docker network `web` and forwards your domain
-to `werewolf-web:3000`.
+Requirements: Docker with Compose v2. A setup CLI that does all of the following
+interactively is on its way; until then the steps are manual.
 
-1. Copy `docker-compose.yml` and `.env.example` (as `.env`) to the server.
-2. In `.env`:
-   - set a long random `SESSION_SECRET`;
-   - put a bcrypt hash of the group password into `GATE_PASSWORD_HASH` instead of a
-     plain `GATE_PASSWORD`;
-   - set `WEB_ORIGIN` to your public URL.
-3. `docker compose up -d`
+Everything that belongs to one installation lives in `instance/` (ignored by git):
+`.env` with configuration and secrets, `backups/`, and Caddy's certificates. Postgres
+data stays in a Docker volume.
+
+```bash
+git clone https://github.com/TimGoldbach/werewolf.git && cd werewolf
+mkdir -p instance && cp .env.example instance/.env && ln -s instance/.env .env
+# edit instance/.env (see below), then:
+docker compose up -d
+```
 
 Migrations run when the API starts. The `backup` service writes a daily `pg_dump` to
-`ops/backups/` and keeps 14 days.
+`instance/backups/` and keeps `BACKUP_RETENTION_DAYS` (default 14) days.
+
+### How the app is reached
+
+`COMPOSE_FILE` combines the core `docker-compose.yml` with one overlay from `compose/`.
+Only the web app is exposed; it forwards `/api` to the API internally.
+
+| Overlay | Use it for | Also set |
+| --- | --- | --- |
+| `compose/caddy.yml` | Your own domain. A bundled Caddy gets TLS certificates automatically; ports 80/443 must be free and the domain must point at the server. | `DOMAIN`, `SECURE_COOKIES=true` |
+| `compose/port.yml` | LAN or laptop over plain HTTP, or a reverse proxy on the same host (`WEB_BIND=127.0.0.1`). | `WEB_BIND`, `WEB_PORT`, `SECURE_COOKIES` (`false` for plain HTTP) |
+| `compose/proxy-network.yml` | An existing reverse proxy in Docker; it forwards to `werewolf-web:3000`. | `PROXY_NETWORK`, `SECURE_COOKIES=true` |
 
 ### Configuration
 
-| Variable | Service | Meaning |
-| --- | --- | --- |
-| `POSTGRES_USER` / `POSTGRES_PASSWORD` / `POSTGRES_DB` | db, api, backup | Database credentials |
-| `GATE_PASSWORD_HASH` | api | bcrypt hash of the group password (preferred) |
-| `GATE_PASSWORD` | api | Plain-text group password (development) |
-| `SESSION_SECRET` | api | Secret for signing session tokens (required) |
-| `SESSION_TTL` | api | Session lifetime, default `30d` |
-| `WEB_ORIGIN` | api | Allowed CORS origin |
-| `DEFAULT_LOCALE` | web | Default language, `en` (default) or `de` |
-| `TIME_ZONE` | web | IANA time zone of the group, default `UTC` |
-| `IMPRINT_URL` | web | Optional imprint/legal notice link in the footer |
-| `IMAGE_PREFIX` / `IMAGE_TAG` | Compose | Which container images to run |
+| Variable | Meaning |
+| --- | --- |
+| `POSTGRES_USER` / `POSTGRES_PASSWORD` / `POSTGRES_DB` | Database credentials |
+| `GATE_PASSWORD_HASH` | bcrypt hash of the group password (preferred) |
+| `GATE_PASSWORD` | Plain-text group password (development) |
+| `SESSION_SECRET` | Secret for signing session tokens (required, long and random) |
+| `SESSION_TTL` | Session lifetime, default `30d` |
+| `SECURE_COOKIES` | `Secure` session cookie, default `true`; `false` only for plain HTTP |
+| `DEFAULT_LOCALE` | Default language, `en` (default) or `de` |
+| `TIME_ZONE` | IANA time zone of the group, default `UTC` |
+| `IMPRINT_URL` | Optional imprint/legal notice link in the footer |
+| `BACKUP_RETENTION_DAYS` | Days to keep nightly backups, default `14` |
+| `IMAGE_PREFIX` / `IMAGE_TAG` | Which container images to run |
 
-## CI/CD
+Wrong passwords are throttled: after 10 failed logins from one client within 15
+minutes, further attempts are refused until the window ends.
+
+## Releases and CI
 
 - **CI** ([ci.yml](.github/workflows/ci.yml)) runs on every pull request and push to
-  `main`:
-  - typecheck, tests and build;
-  - all Prisma migrations against an empty Postgres, including a check that
-    `schema.prisma` has no missing migration.
-- **Deploy** ([deploy.yml](.github/workflows/deploy.yml)) is optional and started by
-  hand (*Actions → Deploy → Run workflow*):
-  1. it runs CI and builds the images to GHCR as `sha-<commit>`;
-  2. it promotes that tag to `:latest`;
-  3. it rolls out via SSH with [ops/deploy.sh](ops/deploy.sh): pull the images, back up
-     the database, then `docker compose up --wait`.
-
-  To roll back, run the deploy again with an earlier `image_tag`.
-
-### Setting up the deploy workflow
-
-Create a GitHub environment `production` with:
-
-| Name | Kind | Value |
-| --- | --- | --- |
-| `DEPLOY_SSH_KEY` | Secret | Private SSH key of the deploy user |
-| `DEPLOY_HOST` | Variable | Server host or IP |
-| `DEPLOY_USER` | Variable | SSH user (needs Docker and write access to the deploy path) |
-| `DEPLOY_PATH` | Variable | Absolute path of the Compose project (contains `.env`) |
-| `DEPLOY_SSH_KNOWN_HOSTS` | Variable | Output of `ssh-keyscan <host>` |
-| `DEPLOY_PORT` | Variable | Optional, default `22` |
-| `DEPLOY_URL` | Variable | Public URL shown on the environment |
+  `main`: typecheck, tests, build, and all Prisma migrations against an empty Postgres
+  (including a check that `schema.prisma` has no missing migration).
+- **Releases** ([release.yml](.github/workflows/release.yml)) use
+  [release-please](https://github.com/googleapis/release-please): it keeps a release PR
+  with the next version and `CHANGELOG.md` up to date from the Conventional Commits on
+  `main`. Merging it tags the release, and the workflow publishes multi-arch images
+  (amd64, arm64) to GHCR as `vX.Y.Z`, `vX.Y`, `vX` and `latest`.
 
 ## License & notice
 

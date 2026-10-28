@@ -1,0 +1,5 @@
+# Only the web app is exposed; it forwards /api/* to the API internally.
+{$DOMAIN} {
+	encode zstd gzip
+	reverse_proxy web:3000
+}

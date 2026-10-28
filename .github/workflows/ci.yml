@@ -4,8 +4,6 @@ on:
   pull_request:
   push:
     branches: [main]
-  # Called by the deploy workflow as a gate before a release.
-  workflow_call:
 
 concurrency:
   group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.sha }}

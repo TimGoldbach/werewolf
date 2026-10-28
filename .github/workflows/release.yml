@@ -1,0 +1,125 @@
+name: Release
+
+# release-please keeps a release PR (version bump + CHANGELOG.md) up to date from the
+# Conventional Commits on main. Merging it tags the release; this workflow then builds
+# the container images for amd64 and arm64 and publishes them to GHCR.
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  release-please:
+    name: Release PR / tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      created: ${{ steps.release.outputs.release_created }}
+      tag: ${{ steps.release.outputs.tag_name }}
+      major: ${{ steps.release.outputs.major }}
+      minor: ${{ steps.release.outputs.minor }}
+    steps:
+      - id: release
+        uses: googleapis/release-please-action@v5
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  build:
+    name: Image ${{ matrix.app }} (${{ matrix.arch }})
+    needs: release-please
+    if: needs.release-please.outputs.created == 'true'
+    # Native runners per architecture: an emulated arm64 Next build takes far too long.
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        app: [api, web]
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.release-please.outputs.tag }}
+      - name: Determine image name
+        # GHCR needs lowercase names; the owner may contain uppercase letters.
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/werewolf-${{ matrix.app }}" >> "$GITHUB_ENV"
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.IMAGE }}
+          labels: org.opencontainers.image.version=${{ needs.release-please.outputs.tag }}
+      - id: build
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: apps/${{ matrix.app }}/Dockerfile
+          platforms: linux/${{ matrix.arch }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Pushed untagged; the merge job tags the multi-arch manifest.
+          outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=gha,scope=${{ matrix.app }}-${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.app }}-${{ matrix.arch }}
+      - name: Export digest
+        run: |
+          mkdir -p "$RUNNER_TEMP/digests"
+          touch "$RUNNER_TEMP/digests/${DIGEST#sha256:}"
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+      - uses: actions/upload-artifact@v7
+        with:
+          name: digests-${{ matrix.app }}-${{ matrix.arch }}
+          path: ${{ runner.temp }}/digests/*
+          retention-days: 1
+
+  publish:
+    name: Publish ${{ matrix.app }}
+    needs: [release-please, build]
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    strategy:
+      matrix:
+        app: [api, web]
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: digests-${{ matrix.app }}-*
+          path: ${{ runner.temp }}/digests
+          merge-multiple: true
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tag the multi-arch image
+        working-directory: ${{ runner.temp }}/digests
+        env:
+          TAG: ${{ needs.release-please.outputs.tag }}
+          MAJOR: ${{ needs.release-please.outputs.major }}
+          MINOR: ${{ needs.release-please.outputs.minor }}
+        run: |
+          image="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/werewolf-${{ matrix.app }}"
+          sources=()
+          for digest in *; do sources+=("$image@sha256:$digest"); done
+          docker buildx imagetools create \
+            --tag "$image:$TAG" --tag "$image:v$MAJOR.$MINOR" --tag "$image:v$MAJOR" --tag "$image:latest" \
+            "${sources[@]}"
+          docker buildx imagetools inspect "$image:$TAG"

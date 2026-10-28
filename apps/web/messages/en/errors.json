@@ -3,6 +3,7 @@
   "network": "No connection to the server",
   "NOT_AUTHENTICATED": "Not logged in",
   "WRONG_PASSWORD": "Wrong password",
+  "TOO_MANY_ATTEMPTS": "Too many wrong attempts. Please wait a few minutes.",
   "VALIDATION_FAILED": "Some input is missing or invalid.",
   "PLAYER_NOT_FOUND": "Player not found.",
   "PLAYER_NAME_TAKEN": "This name is already taken.",

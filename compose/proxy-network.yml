@@ -1,0 +1,13 @@
+# Mode "proxy via network": join an existing Docker network of a reverse proxy, which
+# then forwards the domain to werewolf-web:3000.
+services:
+  web:
+    networks:
+      default: {}
+      proxy:
+        aliases: [werewolf-web]
+
+networks:
+  proxy:
+    name: ${PROXY_NETWORK:?PROXY_NETWORK must be set}
+    external: true

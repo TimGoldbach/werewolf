@@ -1,0 +1,6 @@
+# Modes "lan" and "proxy via port": publish the web app on a host port.
+# WEB_BIND=127.0.0.1 keeps it local for a reverse proxy on the same host.
+services:
+  web:
+    ports:
+      - '${WEB_BIND:-0.0.0.0}:${WEB_PORT:-8080}:3000'

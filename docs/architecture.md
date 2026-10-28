@@ -122,10 +122,25 @@ gracefully for quick entries.
 
 ## Deployment
 
-Docker Compose runs web, api, Postgres and a backup container (daily `pg_dump`, kept
-14 days). A reverse proxy in front terminates TLS. The API applies migrations when it
-starts; CI checks them against an empty database. The optional deploy workflow builds
-images to GHCR and rolls them out over SSH (see the README).
+An installation is a git checkout plus an `instance/` directory (ignored by git) that
+holds `.env`, backups and Caddy's certificates; `.env` is linked to the repository root
+so plain `docker compose` works.
+
+- **Core stack** (`docker-compose.yml`): web, api, Postgres and a backup container
+  (daily `pg_dump`, `BACKUP_RETENTION_DAYS`). The API applies migrations when it
+  starts; CI checks them against an empty database.
+- **Exposure overlays** (`compose/`), picked via `COMPOSE_FILE`:
+  - a bundled Caddy with automatic TLS for an own domain
+  - a host port (LAN, or a proxy on the same host)
+  - the Docker network of an existing proxy
+
+  Only the web app is exposed. `SECURE_COOKIES` is off only for plain-HTTP setups.
+- **Login throttling:** wrong passwords are counted per client IP. The API trusts
+  `X-Forwarded-For` from private networks, which Caddy sets; in LAN mode all devices
+  share one counter.
+- **Images:** release-please tags releases from the Conventional Commits on `main`, and
+  the release workflow builds amd64 and arm64 images on native runners and publishes
+  them to GHCR. The checked-out release tag selects the image version.
 
 ## Testing
 

@@ -1,0 +1,18 @@
+# Mode "domain": a bundled Caddy terminates TLS for DOMAIN and fetches certificates
+# automatically. Ports 80 and 443 must be free and DOMAIN must point at this server.
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - web
+    ports:
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
+    environment:
+      DOMAIN: ${DOMAIN:?DOMAIN must be set}
+    volumes:
+      - ./compose/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./instance/caddy/data:/data
+      - ./instance/caddy/config:/config
