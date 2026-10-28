@@ -1,0 +1,40 @@
+{
+  "list": {
+    "title": "Spiele",
+    "record": "Spiel erfassen",
+    "empty": "Noch keine Spiele erfasst.",
+    "summary": "{count, plural, one {# Spieler} other {# Spieler}} · Sieg: {win}"
+  },
+  "mode": {
+    "live": "Live",
+    "quick": "Quick"
+  },
+  "detail": {
+    "back": "‹ Spiele",
+    "copy": "Kopieren",
+    "edit": "Bearbeiten",
+    "win": "Sieg: <value>{win}</value>",
+    "moderator": "Moderator: {name}",
+    "columns": {
+      "player": "Spieler",
+      "role": "Rolle",
+      "faction": "Fraktion",
+      "result": "Ergebnis"
+    },
+    "won": "Sieg"
+  },
+  "edit": {
+    "back": "‹ Zurück zum Spiel",
+    "title": "Spiel bearbeiten",
+    "stillRunning": "Dieses Spiel läuft noch. Ein laufendes Live-Spiel steuerst du in der Live-Konsole; nur abgeschlossene Spiele lassen sich hier nachträglich bearbeiten."
+  },
+  "new": {
+    "titleCopy": "Spiel kopieren",
+    "titleRecord": "Spiel erfassen"
+  },
+  "delete": {
+    "confirm": "Dieses Spiel wirklich löschen?",
+    "busy": "Löschen …",
+    "button": "Spiel löschen"
+  }
+}

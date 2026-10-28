@@ -1,0 +1,43 @@
+{
+  "title": "Leaderboard",
+  "recordGame": "Record game",
+  "unknownPlayer": "Unknown",
+  "empty": {
+    "title": "The village still sleeps",
+    "description": "First add players and record a game — then the leaderboard shows up here.",
+    "createPlayers": "Add players"
+  },
+  "podium": {
+    "avgPoints": "avg {value} pts",
+    "gamesAndRate": "{count, plural, one {# game} other {# games}} · {rate}"
+  },
+  "table": {
+    "player": "Player",
+    "games": "Games",
+    "rate": "Rate",
+    "streak": "Streak",
+    "avgPoints": "Avg. points",
+    "points": "{points} pts",
+    "specialWinsTitle": "Wins as lovers or solo player"
+  },
+  "factionLetter": {
+    "village": "V",
+    "werewolves": "W",
+    "solo": "S"
+  },
+  "footnote": "Sorted by points per game (points ÷ games); qualified from {minGames, plural, one {# game} other {# games}}. V/W/S = win rate as village / werewolves / solo, ★ = wins as lovers or solo player.",
+  "scoring": {
+    "title": "How points are earned",
+    "show": "show",
+    "hide": "hide",
+    "intro": "The leaderboard compares the <strong>average points per game</strong>: how many games someone has played doesn't matter — only what came out of them. And <strong>a win counts for more the fewer people share it</strong>.",
+    "perGame": "Per game",
+    "win": "Win: {category}",
+    "loss": "Loss",
+    "lossHint": "Also when nobody wins (draw, abandoned) — the game still counts.",
+    "averageRule": "Average = points of all games ÷ number of games. Someone who plays twice as often and does equally well ends up exactly the same — that's why there are no points for showing up or for streaks.",
+    "categoryRule": "The win category comes from the game's win label, not from the role card — if you win with the village as the Wolf-Hound, you get village points.",
+    "qualificationRule": "You qualify from {minGames, plural, one {# game} other {# games}}, so that no single lucky hit leads the table. Anyone below that runs along in gray, out of competition.",
+    "tiebreakRule": "If the averages are equal, the win rate decides; if that is tied too, the rank is shared."
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "shortRole": {
+    "werewolf": "Werewolf",
+    "villager": "Villager"
+  },
+  "deck": {
+    "title": "Roles in play",
+    "hint": "Tap = one more. You enter who has which role during the game, once it wakes up.",
+    "addRole": "Add {name}",
+    "addRoleCounted": "Add {name} ({count} so far)",
+    "removeOne": "{name}: one fewer",
+    "searchPlaceholder": "+ More roles from the catalog …",
+    "roleCount": "{deck}/{players} roles",
+    "factionShort": {
+      "werewolves": "Wolves",
+      "village": "Village",
+      "variable": "variable",
+      "solo": "Solo"
+    },
+    "wolfRule": "Rule of thumb for {players} players: {count} werewolves.",
+    "fillVillagers": "{count, plural, one {Fill the rest: +# villager} other {Fill the rest: +# villagers}}",
+    "tooMany": "{count, plural, one {# role too many} other {# roles too many}}",
+    "clear": "Clear deck"
+  },
+  "picker": {
+    "heading": "Who's playing?",
+    "deselectAll": "Deselect all",
+    "lastTime": "Same as last time:",
+    "searchPlaceholder": "Search or add new …",
+    "create": "Add",
+    "createFailed": "Could not create the player.",
+    "moderatorTitle": "Moderating this game — tap to play along instead",
+    "moderatorTag": "· Moderator",
+    "noneNamed": "Nobody named “{name}” — tap “Add” to create them.",
+    "noMatch": "No match.",
+    "emptyRoster": "Nobody in the roster yet — type a name above and add it."
+  },
+  "palette": {
+    "groupLabel": "Role to assign",
+    "searchPlaceholder": "Search another role …"
+  },
+  "roleSearch": {
+    "searchPlaceholder": "Search role …"
+  }
+}

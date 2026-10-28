@@ -1,0 +1,11 @@
+{
+  "title": "Spieler",
+  "newPlayerPlaceholder": "Neuer Spielername",
+  "add": "Hinzufügen",
+  "addFailed": "Fehler",
+  "archive": "Archivieren",
+  "reactivate": "Reaktivieren",
+  "noActive": "Noch keine aktiven Spieler.",
+  "archived": "Archiviert",
+  "inactive": "inaktiv"
+}

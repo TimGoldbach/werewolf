@@ -1,0 +1,112 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-werewolf}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-werewolf}
+      POSTGRES_DB: ${POSTGRES_DB:-werewolf}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-werewolf}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    # Production: prebuilt image from GHCR (deploy workflow). Locally: docker compose build.
+    image: ${IMAGE_PREFIX:-ghcr.io/timgoldbach/werewolf}-api:${IMAGE_TAG:-latest}
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-werewolf}:${POSTGRES_PASSWORD:-werewolf}@db:5432/${POSTGRES_DB:-werewolf}?schema=public
+      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET must be set}
+      GATE_PASSWORD: ${GATE_PASSWORD:-}
+      GATE_PASSWORD_HASH: ${GATE_PASSWORD_HASH:-}
+      SESSION_TTL: ${SESSION_TTL:-30d}
+      API_PORT: '3001'
+      WEB_ORIGIN: ${WEB_ORIGIN:-http://localhost}
+      NODE_ENV: production
+    expose:
+      - '3001'
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:3001/health').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      # Migrations run on start
+      start_period: 60s
+    networks:
+      default: {}
+      web:
+        aliases: [werewolf-api]
+
+  web:
+    image: ${IMAGE_PREFIX:-ghcr.io/timgoldbach/werewolf}-web:${IMAGE_TAG:-latest}
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        # Next bakes the /api rewrite target in at build time, so set it here.
+        API_INTERNAL_URL: http://api:3001
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      API_INTERNAL_URL: http://api:3001
+      IMPRINT_URL: ${IMPRINT_URL:-}
+      DEFAULT_LOCALE: ${DEFAULT_LOCALE:-en}
+      TIME_ZONE: ${TIME_ZONE:-UTC}
+      NODE_ENV: production
+    expose:
+      - '3000'
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:3000/login').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      default: {}
+      web:
+        aliases: [werewolf-web]
+
+  # No proxy of its own: an existing reverse proxy on the external Docker network "web"
+  # terminates TLS and forwards the domain to werewolf-web:3000.
+
+  backup:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # libpq defaults, also used by the pre-deploy backup in ops/deploy.sh
+      PGHOST: db
+      PGUSER: ${POSTGRES_USER:-werewolf}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-werewolf}
+      PGDATABASE: ${POSTGRES_DB:-werewolf}
+    volumes:
+      - ./ops/backups:/backups
+    entrypoint:
+      - sh
+      - -c
+      - >
+        while true; do
+        pg_dump | gzip > /backups/werewolf-$$(date +%Y%m%d-%H%M%S).sql.gz;
+        find /backups -name '*.sql.gz' -mtime +14 -delete;
+        sleep 86400;
+        done
+
+volumes:
+  pgdata:
+
+networks:
+  web:
+    external: true

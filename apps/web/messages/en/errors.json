@@ -1,0 +1,17 @@
+{
+  "unknown": "Unknown error",
+  "network": "No connection to the server",
+  "NOT_AUTHENTICATED": "Not logged in",
+  "WRONG_PASSWORD": "Wrong password",
+  "VALIDATION_FAILED": "Some input is missing or invalid.",
+  "PLAYER_NOT_FOUND": "Player not found.",
+  "PLAYER_NAME_TAKEN": "This name is already taken.",
+  "UNKNOWN_PLAYERS": "Unknown player(s).",
+  "DUPLICATE_PLAYERS": "A player appears more than once in the game.",
+  "UNKNOWN_ROLES": "Unknown role(s).",
+  "GAME_NOT_FOUND": "Game not found.",
+  "GAME_NOT_FINISHED": "This is only possible once the game is finished.",
+  "GAME_ALREADY_FINISHED": "The game is already finished.",
+  "UNKNOWN_EVENT_TYPE": "Unknown action.",
+  "TEST_MODE_REQUIRED": "Enable test mode first."
+}

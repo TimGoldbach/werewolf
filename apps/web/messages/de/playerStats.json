@@ -1,0 +1,32 @@
+{
+  "unknownPlayer": "Unbekannt",
+  "back": "‹ Rangliste",
+  "noGames": "Noch keine Spiele erfasst.",
+  "metrics": {
+    "avgPoints": "Ø Punkte",
+    "games": "Spiele",
+    "wins": "Siege",
+    "rate": "Quote"
+  },
+  "sources": {
+    "title": "Woher die Punkte kommen",
+    "wins": "Siege: {category}",
+    "losses": "Niederlagen",
+    "total": "Summe",
+    "avgPerGame": "Ø pro Spiel"
+  },
+  "byFaction": {
+    "title": "Nach Fraktion",
+    "village": "Dorf {rate} ({games})",
+    "werewolves": "Werwölfe {rate} ({games})",
+    "solo": "Solo {rate} ({games})"
+  },
+  "byRole": {
+    "title": "Nach Rolle",
+    "empty": "Keine Daten.",
+    "role": "Rolle",
+    "games": "Spiele",
+    "wins": "Siege",
+    "rate": "Quote"
+  }
+}

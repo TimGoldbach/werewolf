@@ -1,0 +1,25 @@
+{
+  "suggestions": {
+    "noneForCount": "Mit {playerCount} Spielern habt ihr noch kein Set gespielt — nach eurer ersten Partie taucht es hier als Vorschlag auf.",
+    "title": "Eure Sets für {playerCount} Spieler",
+    "info": "Sortiert nach Spielen × Feedback: Bei ⌀ ★★★ zählt jedes Spiel einfach, jeder Stern mehr verdoppelt, jeder weniger halbiert.",
+    "showLess": "Weniger anzeigen",
+    "showAll": "Alle {count} Sets anzeigen",
+    "suggested": "Vorschlag",
+    "timesPlayed": "{count}× gespielt",
+    "inDeck": "✓ Im Deck",
+    "apply": "Übernehmen",
+    "ratingFrom": "{avg} aus {count, plural, one {# Bewertung} other {# Bewertungen}}",
+    "noFeedback": "noch ohne Feedback",
+    "lastPlayed": "zuletzt {date}",
+    "outcomes": "Ausgang: {outcomes}"
+  },
+  "feedback": {
+    "question": "Wie fandet ihr das Set?",
+    "heading": "Feedback zum Set",
+    "hint": "Je besser eure Bewertung, desto öfter wird euch diese Rollen-Kombination bei {playerCount} Spielern wieder vorgeschlagen.",
+    "rateGroup": "Set bewerten",
+    "starLabel": "{value} von 5 – {label}",
+    "saveFailed": "Speichern fehlgeschlagen."
+  }
+}

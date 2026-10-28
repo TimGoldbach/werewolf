@@ -1,0 +1,39 @@
+import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { SESSION_EXPIRED_PATH } from './session'
+
+const API = process.env.API_INTERNAL_URL || 'http://localhost:3001'
+
+export class ApiError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+  ) {
+    super(message)
+  }
+}
+
+/**
+ * Fetch against the internal Nest API from server components, forwarding the cookie.
+ * On 401 (invalid session) it redirects, as the layout does, instead of throwing: pages render in
+ * parallel with the layout and would otherwise be logged as server errors before its redirect.
+ */
+export async function serverFetch<T>(path: string, init?: RequestInit): Promise<T> {
+  const cookie = headers().get('cookie') ?? ''
+  const res = await fetch(`${API}${path}`, {
+    ...init,
+    headers: { 'content-type': 'application/json', cookie, ...(init?.headers ?? {}) },
+    cache: 'no-store',
+  })
+  if (res.status === 401) redirect(SESSION_EXPIRED_PATH)
+  if (!res.ok) {
+    throw new ApiError(res.status, `API ${path} → ${res.status}`)
+  }
+  return res.json() as Promise<T>
+}
+
+/** API errors (e.g. unreachable) deliberately throw: an outage must not lead to the session being deleted. */
+export async function isAuthenticated(): Promise<boolean> {
+  const data = await serverFetch<{ authenticated: boolean }>('/auth/session')
+  return data.authenticated
+}

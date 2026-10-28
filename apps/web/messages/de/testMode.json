@@ -1,0 +1,11 @@
+{
+  "banner": "Testmodus aktiv — neue Daten sind temporär.",
+  "title": "Test / Debug",
+  "generate": "+ Testspiele erzeugen",
+  "end": "Testmodus beenden & aufräumen",
+  "activate": "Testmodus aktivieren",
+  "confirmEnd": "Testmodus beenden? Alle im Testmodus erzeugten Spiele und Spieler werden unwiderruflich gelöscht.",
+  "purged": "Aufgeräumt: {games, plural, one {# Spiel} other {# Spiele}} und {players, plural, one {# Spieler} other {# Spieler}} gelöscht.",
+  "generated": "{count, plural, one {# Testspiel} other {# Testspiele}} erzeugt.",
+  "info": "Im Testmodus werden alle neuen Spiele & Spieler als temporär markiert und beim Beenden wieder gelöscht — ideal zum Ausprobieren der Statistiken."
+}

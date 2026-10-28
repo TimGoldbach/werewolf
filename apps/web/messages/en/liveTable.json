@@ -1,0 +1,41 @@
+{
+  "overview": "Overview · {alive}/{total} alive",
+  "round": "Round {round}",
+  "setup": "Setup",
+  "longPressTip": "Tip: press and hold a player to change their role or alive/dead status.",
+  "longPressTitle": "Press and hold to edit the role",
+  "gullMarked": "Pooped on by the Seagull",
+  "mayor": "Mayor",
+  "alive": "alive",
+  "diedRound": "R{round}",
+  "roleOpen": "No role yet",
+  "chips": {
+    "loverWith": "♥ in love with {name}",
+    "charmed": "charmed",
+    "extraLife": "Extra life",
+    "model": "Role model: {name}",
+    "wolfVictim": "Wolf victim",
+    "whiteWolfTarget": "Target: White Wolf",
+    "poisoned": "poisoned",
+    "protected": "protected",
+    "hunterShoots": "Hunter shoots!",
+    "rustyBlade": "rusty sword †",
+    "blocked": "blocked (Dog)",
+    "poet": "Poet",
+    "harlotInDen": "with {name} · wolf den",
+    "harlotSafe": "with {name} · untouchable"
+  },
+  "edit": {
+    "label": "Edit player",
+    "close": "Close",
+    "role": "Role",
+    "roleOpen": "— No role yet —",
+    "status": "Status",
+    "alive": "Alive",
+    "dead": "Dead",
+    "deathCause": "Cause of death",
+    "pickCause": "— Choose cause —",
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}

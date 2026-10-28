@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark by default — moderator mode at the table in a dimmed room. */
+:root {
+  --background: 240 10% 4%;
+  --foreground: 0 0% 98%;
+  --card: 240 8% 8%;
+  --card-foreground: 0 0% 98%;
+  --primary: 270 70% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 6% 16%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 5% 14%;
+  --muted-foreground: 240 5% 65%;
+  --accent: 270 50% 22%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 70% 45%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5% 18%;
+  --input: 240 5% 18%;
+  --ring: 270 70% 60%;
+  --radius: 0.75rem;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+/* Playful pixel accent for logo/headings (use sparingly). */
+.font-pixel {
+  font-family: var(--font-pixel), ui-monospace, monospace;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+}
+
+/* Always render pixel art sharp. */
+svg[shape-rendering='crispEdges'] {
+  image-rendering: pixelated;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-twinkle,
+  .animate-float,
+  .animate-flicker,
+  .animate-drift,
+  .animate-glide,
+  .animate-flap,
+  .animate-glow {
+    animation: none;
+  }
+}
+
+/* The live console's fixed action bar would cover the footer (language, imprint). */
+body:has([data-live-action-bar]) footer {
+  padding-bottom: 5rem;
+}

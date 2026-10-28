@@ -1,0 +1,72 @@
+{
+  "metaTitle": "Rules · {appName}",
+  "metaDescription": "Game flow, win conditions and all roles at a glance",
+  "toApp": "To the app",
+  "toLogin": "To login",
+  "title": "Rules",
+  "intro": "Werewolf by the Unified Ruleset — explained briefly so that everyone sits down at the table with the same rules.",
+  "about": {
+    "title": "What it's about",
+    "intro": "Werewolves are hiding in a village. Everyone is secretly given a role and so belongs to a side:",
+    "village": "<hl>Village</hl> — finds the werewolves and eliminates them by vote.",
+    "werewolves": "<hl>Werewolves</hl> — secretly eat villagers at night and disguise themselves as harmless neighbors by day.",
+    "loners": "<hl>Loners</hl> — pursue their own goal and win alone.",
+    "ambiguous": "<hl>Ambiguous</hl> — can switch sides over the course of the game."
+  },
+  "setup": {
+    "title": "Setup",
+    "moderator": "One person is the <hl>moderator</hl>: doesn't play, knows all the roles, guides everyone through night and day, and has the final say on rules questions.",
+    "cards": "The role cards are dealt face down. Everyone looks at their card in secret and shows it to nobody.",
+    "recommendation": "Recommendation: 2–3 werewolves for up to 12 players, 3–4 above that."
+  },
+  "night": {
+    "title": "The night",
+    "sleep": "Everyone closes their eyes. The moderator wakes the roles one at a time in a fixed order.",
+    "act": "Whoever is woken acts silently by pointing and nodding, then goes back to sleep.",
+    "firstNight": "On the first night, additional roles wake up that set up the game — such as Cupid, the Thief or the Wild Child.",
+    "wolves": "The werewolves wake up together and agree on a victim. They may not eat another werewolf."
+  },
+  "day": {
+    "title": "The day",
+    "wake": "Everyone wakes up and the moderator announces who died in the night. The dead reveal their cards and may not give anything away from now on.",
+    "mayor": "On the first day, the village elects a <hl>mayor</hl>. Their vote counts double, they break ties, and they name a successor when they die.",
+    "vote": "The village discusses and votes. Whoever gets the most votes is lynched, reveals their card and is out of the game. In case of a tie, the mayor decides.",
+    "nextNight": "Then the next night falls — until a win condition is met.",
+    "startWithDay": "If you like, the game can start with a day instead of a night."
+  },
+  "death": {
+    "title": "Death, love and chain reactions",
+    "triggers": "Some roles trigger something when they die or don't die so easily: the Hunter takes someone down with them, the Elder survives the first werewolf attack, and a wolf that has eaten the Knight with the Rusty Sword dies of it. Details are listed with the roles.",
+    "cupid": "On the first night, Cupid pairs up two people. If one of them dies, the other dies of grief.",
+    "lovers": "If the lovers belong to different sides, they play together against everyone else and win when only the two of them are left alive."
+  },
+  "win": {
+    "title": "Who wins?",
+    "tieBreak": "If several conditions are met at the same time, the one listed higher up applies."
+  },
+  "table": {
+    "title": "At the table",
+    "cards": "Never show your own card — talking, bluffing and lying are allowed.",
+    "night": "Don't peek at night and don't make noises that give anything away.",
+    "dead": "The dead stay silent and give no more hints."
+  },
+  "allRoles": "All roles",
+  "roleGuide": {
+    "searchPlaceholder": "Search roles…",
+    "searchLabel": "Search roles",
+    "categoriesLabel": "Role categories",
+    "noMatch": "No role matches “{query}”.",
+    "aliases": "also: {names}",
+    "wake": {
+      "first": "1st night",
+      "every": "every night",
+      "night": "at night"
+    },
+    "intro": {
+      "werewolves": "Wake up at night as a pack, eat a victim together and win together.",
+      "villagers": "Win with the village. Most have a special ability that helps the village.",
+      "ambiguous": "Start on one side, but can switch sides or roles over the course of the game.",
+      "loners": "Pursue their own goal and usually win alone."
+    }
+  }
+}

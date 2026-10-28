@@ -1,0 +1,14 @@
+# Reverse proxy with automatic TLS.
+# DOMAIN comes from the environment (locally: localhost; in production: your domain).
+# /api/* goes to the Nest API (prefix stripped), everything else to Next.
+{$DOMAIN:localhost} {
+	encode gzip
+
+	handle_path /api/* {
+		reverse_proxy api:3001
+	}
+
+	handle {
+		reverse_proxy web:3000
+	}
+}

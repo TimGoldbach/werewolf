@@ -1,0 +1,268 @@
+{
+  "winBanner": {
+    "werewolves": {
+      "title": "Die Werwölfe triumphieren!",
+      "line": "Das Dorf versinkt in Geheul und Dunkelheit."
+    },
+    "village": {
+      "title": "Das Dorf hat überlebt!",
+      "line": "Bei Morgengrauen ist der letzte Wolf zur Strecke gebracht."
+    },
+    "pied-piper": {
+      "title": "Der Flötenspieler siegt!",
+      "line": "Eine letzte Melodie — und das ganze Dorf tanzt nach seiner Pfeife."
+    },
+    "white-werewolf": {
+      "title": "Der weiße Werwolf bleibt allein.",
+      "line": "Niemand sonst hat diese Nacht überlebt."
+    },
+    "lovers": {
+      "title": "Das Liebespaar gewinnt!",
+      "line": "Vereint gegen alle — bis zuletzt."
+    },
+    "angel": {
+      "title": "Der Engel ist erlöst!",
+      "line": "In der ersten Runde gefallen — und endlich frei."
+    },
+    "gull": {
+      "title": "Die Möwe hat alle erwischt!",
+      "line": "Kein Kopf blieb sauber — kreischend zieht sie ihre Runde über dem Dorf."
+    },
+    "vampire": {
+      "title": "Die Vampire behalten die Nacht!",
+      "line": "Kein Herz schlägt mehr, das nicht ihnen gehört."
+    },
+    "serial-killer": {
+      "title": "Der Serienkiller bleibt allein zurück.",
+      "line": "Er wischt die Klinge ab. Es ist niemand mehr da, der zusieht."
+    },
+    "demon": {
+      "title": "Der Dämon hat das Dorf verschlungen.",
+      "line": "Wer nach ihm griff, griff in die Finsternis — und blieb dort."
+    },
+    "stone-golem": {
+      "title": "Der Steingolem steht als Letzter.",
+      "line": "Um ihn herum nur Staub. Er rührt sich nicht — er muss nicht mehr."
+    },
+    "werehamster": {
+      "title": "Der Werhamster triumphiert!",
+      "line": "Kein Wolf heult mehr. Es raschelt nur noch leise im Stroh."
+    },
+    "frida": {
+      "title": "Frida hat bekommen, was sie wollte.",
+      "line": "Endlich gefressen — und endlich, endlich nicht mehr schüchtern."
+    },
+    "jason": {
+      "title": "Jason wollte genau das.",
+      "line": "Das Dorf hat ihn gelyncht. Er lächelt noch am Strick."
+    },
+    "bella": {
+      "title": "Bella wurde gebissen — ihr Traum ist wahr!",
+      "line": "Zwei kleine Wunden am Hals, und alles war es wert."
+    },
+    "hermione": {
+      "title": "Hermine hat alle durchschaut!",
+      "line": "Jede Rolle richtig zugeordnet — das Dorf hatte nie eine Chance auf Geheimnisse."
+    },
+    "rascal": {
+      "title": "Der Strolch hat seine Wette gewonnen!",
+      "line": "Alle, auf die er gesetzt hat, liegen unter der Erde. Er kassiert."
+    },
+    "groom": {
+      "title": "Der Bräutigam führt drei Bräute heim!",
+      "line": "Ein Zyklus überstanden, drei Ringe vergeben — die Hochzeit kann steigen."
+    },
+    "blob": {
+      "title": "Das Dorf ist ein einziger Blob.",
+      "line": "Alles Lebendige wurde eingesaugt. Es gluckert nur noch."
+    },
+    "leech": {
+      "title": "Der Blutegel hat alle ausgesaugt!",
+      "line": "Kein Tropfen blieb zurück, wo eben noch ein Dorf war."
+    },
+    "none": {
+      "title": "Niemand hat überlebt.",
+      "line": "Das Dorf liegt verlassen im Nebel."
+    }
+  },
+  "toResults": "Zur Auswertung",
+  "phase": {
+    "night": "Nacht",
+    "day": "Tag",
+    "setup": "Aufstellung"
+  },
+  "round": "Runde {round}",
+  "revealRolesRule": {
+    "title": "Diese Partie wird mit aufgedeckten Rollen gespielt",
+    "label": "Rollen aufdecken"
+  },
+  "connection": {
+    "liveTitle": "Live über alle Geräte mit diesem Link synchronisiert",
+    "live": "Live",
+    "lostTitle": "Keine Verbindung – der angezeigte Stand kann veraltet sein",
+    "lost": "Verbindung verloren"
+  },
+  "sound": {
+    "turnOff": "Ton ausschalten",
+    "turnOn": "Ton einschalten",
+    "on": "Ton: an",
+    "off": "Ton: aus"
+  },
+  "possibleEnd": "Mögliches Spielende: <strong>{label}</strong>",
+  "finishNow": "Jetzt werten",
+  "finish": "Werten",
+  "finishManually": "Spiel manuell abschließen",
+  "finishConfirm": "Spiel abschließen und werten?",
+  "undo": "Rückgängig",
+  "sending": "Senden …",
+  "next": "Weiter",
+  "dogBlocked": "Vom Hund bewacht — diese Person hat heute Nacht keine Fähigkeit. Trotzdem zum Schein aufrufen und weiter.",
+  "errors": {
+    "action": "Aktion fehlgeschlagen — bitte erneut versuchen.",
+    "sound": "Ton konnte nicht umgeschaltet werden.",
+    "undo": "Rückgängig machen fehlgeschlagen.",
+    "finish": "Abschließen fehlgeschlagen — bitte erneut versuchen."
+  },
+  "hunter": {
+    "title": "{name}: Der Jäger reißt jemanden mit!",
+    "shoot": "Schuss"
+  },
+  "winModal": {
+    "title": "Mögliches Spielende",
+    "condition": "Sieg-Bedingung: <strong>{label}</strong>",
+    "keepPlaying": "Weiterspielen",
+    "hint": "Stimmt der Vorschlag nicht? Weiterspielen — der Ausgang lässt sich nach dem Werten in der Spiel-Bearbeitung korrigieren."
+  },
+  "narration": {
+    "readAloud": "Zum Vorlesen",
+    "rerollTitle": "Eine andere Erzählung zu diesem Schritt anzeigen",
+    "reroll": "Neue Geschichte",
+    "quote": "„{lore}\""
+  },
+  "timer": {
+    "title": "Tag-Timer",
+    "button": "Timer",
+    "close": "Schließen",
+    "expired": "Zeit abgelaufen!",
+    "minutes": "{minutes} min",
+    "less": "30 Sekunden weniger",
+    "more": "30 Sekunden mehr",
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Weiter",
+    "reset": "Zurücksetzen"
+  },
+  "rusty": {
+    "title": "Rostige Klinge: {name} wurde gefressen",
+    "instruction": "Welcher Werwolf sitzt im Uhrzeigersinn am nächsten? Er erkrankt und stirbt am Morgen des übernächsten Tages – stirbt er vorher, passiert nichts.",
+    "noWolves": "Kein lebender Werwolf mehr — die Infektion verfällt.",
+    "pickWolf": "Werwolf wählen …",
+    "infect": "Infizieren",
+    "reminderTonight": "<strong>{name}</strong> wurde von der rostigen Klinge infiziert und stirbt beim Auflösen dieser Nacht.",
+    "reminderLater": "<strong>{name}</strong> wurde von der rostigen Klinge infiziert und stirbt am Morgen des übernächsten Tages."
+  },
+  "revealReminder": {
+    "title": "<strong>{count, plural, one {Rolle aufdecken} other {Rollen aufdecken}}</strong> — in dieser Partie werden Karten nach dem Tod gezeigt.",
+    "was": "<strong>{name}</strong> war {role}",
+    "unassigned": "Noch ohne Rolle im System: {names} — erst zuweisen, dann aufdecken."
+  },
+  "playerSelect": {
+    "placeholder": "Ziel wählen …"
+  },
+  "control": {
+    "checkPlayer": "Spieler prüfen …",
+    "trueRole": "Wahre Rolle: <strong>{role}</strong>",
+    "chooseVictim": "Opfer wählen",
+    "werewolfVictim": "Opfer der Werwölfe",
+    "harlotInDen": "Die Wanderhure nächtigt bei einem Werwolf – gefressen wird stattdessen <strong>{name}</strong>.",
+    "extraVictim": "Zusätzliches Opfer",
+    "secondVictim": "Zweites Opfer",
+    "infect": "Infizieren / zum Wolf",
+    "pickHost": "Gastgeber wählen …",
+    "stayOver": "Nächtigen",
+    "staysWithWolf": "Nächtigt bei einem Werwolf (wird gefressen)",
+    "staysWith": "Nächtigt bei (unantastbar)",
+    "guardPerson": "Person bewachen …",
+    "guard": "Bewachen",
+    "blocked": "Blockiert (nur Alibi)",
+    "pickPoet": "Poet/in wählen …",
+    "makePoet": "Zum Poeten machen",
+    "poet": "Spricht morgen in Reimen",
+    "gullDone": "Alle lebenden Mitspieler sind getroffen — die Möwe hat ihr Ziel erreicht.",
+    "gullPick": "Kopf treffen …",
+    "gullMark": "Ankacken",
+    "gullHit": "Getroffen ({hit}/{total} Lebende)",
+    "loverA": "Verliebte/r A",
+    "loverB": "Verliebte/r B",
+    "setLovers": "Liebespaar setzen",
+    "lovers": "Liebespaar",
+    "charmTarget1": "Ziel 1",
+    "charmTarget2": "Ziel 2",
+    "charm": "Betören",
+    "charmed": "Betört",
+    "noWolfHound": "Kein Wolfshund im Spiel.",
+    "sideVillage": "Dorf",
+    "sideWerewolves": "Werwölfe",
+    "sideChosen": "Entschieden für",
+    "sideChosenVillage": "das Dorf",
+    "sideChosenWerewolves": "die Werwölfe",
+    "witchVictim": "Werwolf-Opfer: <strong>{name}</strong>",
+    "witchNoVictim": "noch keins gewählt",
+    "harlotWithWolf": "Wanderhure bei einem Werwolf",
+    "heal": "Heiltrank",
+    "poisonPick": "vergiften …",
+    "poison": "Gifttrank",
+    "healSaves": "Heiltrank rettet",
+    "poisonHits": "Gifttrank trifft",
+    "pickMayor": "Bürgermeister wählen …",
+    "appoint": "Ernennen",
+    "mayor": "Bürgermeister",
+    "resolveNight": "Nacht auflösen",
+    "hunterFirst": "Erst Jäger-Schuss …",
+    "startDay": "Tag beginnen",
+    "startFirstNight": "Erste Nacht beginnen",
+    "startNextNight": "Nächste Nacht beginnen",
+    "lynchPick": "Gelyncht …",
+    "lynch": "Lynchen",
+    "noWildChild": "Kein wildes Kind im Spiel.",
+    "modelPick": "Vorbild …",
+    "rememberModel": "Vorbild merken",
+    "model": "Vorbild",
+    "whiteWolfPick": "Werwolf töten …",
+    "whiteWolfKill": "Werwolf töten",
+    "whiteWolfKills": "Weißer Werwolf tötet",
+    "openingDay": "Mit einem Tag beginnen"
+  },
+  "nightDeaths": {
+    "none": "Eine ruhige Nacht — niemand ist gestorben.",
+    "title": "In dieser Nacht gestorben ({count})",
+    "showRolesAndCauses": "Rollen & Todesursachen zeigen",
+    "showCauses": "Todesursachen zeigen"
+  },
+  "spoiler": {
+    "concealed": "Rollen verdeckt",
+    "concealedHint": "{alive}/{total} leben · Mitschauen erlaubt",
+    "reveal": "Aufdecken",
+    "revealed": "Aufgedeckt",
+    "revealedHint": "– nur für deine Augen",
+    "conceal": "Verdecken"
+  },
+  "secretTask": {
+    "title": "Geheime Aufgabe offen",
+    "hint": "Nur für dich – aufdecken, wenn niemand mitschaut.",
+    "reveal": "Aufdecken"
+  },
+  "assign": {
+    "question": "Wer ist {role}?",
+    "questionRemaining": "Wer ist {role}? (noch {count} zu wählen)",
+    "noCandidates": "Keine unzugewiesene Person mehr übrig – diese Rolle ist niemandem (mehr) zugeordnet. Überspringe den Schritt mit „Weiter →\".",
+    "pickPerson": "Person wählen …",
+    "assign": "Zuweisen",
+    "manualTitle": "Rollen manuell zuweisen ({count} offen)",
+    "manualHint": "Für Rollen, die nachts nicht erwachen (z. B. Jäger, Der Alte, Ritter) – hier zuweisen, sonst greifen ihre Effekte beim Tod nicht.",
+    "rolePlaceholder": "— Rolle —",
+    "ok": "OK",
+    "revealUnassigned": "Rolle von <strong>{name}</strong> noch nicht zugewiesen — wähle sie von der Karte:",
+    "assignAndReveal": "Zuweisen & aufdecken"
+  }
+}

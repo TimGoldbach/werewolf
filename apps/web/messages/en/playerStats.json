@@ -1,0 +1,32 @@
+{
+  "unknownPlayer": "Unknown",
+  "back": "‹ Leaderboard",
+  "noGames": "No games recorded yet.",
+  "metrics": {
+    "avgPoints": "Avg. points",
+    "games": "Games",
+    "wins": "Wins",
+    "rate": "Rate"
+  },
+  "sources": {
+    "title": "Where the points come from",
+    "wins": "Wins: {category}",
+    "losses": "Losses",
+    "total": "Total",
+    "avgPerGame": "Avg. per game"
+  },
+  "byFaction": {
+    "title": "By faction",
+    "village": "Village {rate} ({games})",
+    "werewolves": "Werewolves {rate} ({games})",
+    "solo": "Solo {rate} ({games})"
+  },
+  "byRole": {
+    "title": "By role",
+    "empty": "No data.",
+    "role": "Role",
+    "games": "Games",
+    "wins": "Wins",
+    "rate": "Rate"
+  }
+}

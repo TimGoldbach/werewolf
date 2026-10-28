@@ -1,0 +1,43 @@
+{
+  "title": "Rangliste",
+  "recordGame": "Spiel erfassen",
+  "unknownPlayer": "Unbekannt",
+  "empty": {
+    "title": "Noch ruht das Dorf",
+    "description": "Lege zuerst Spieler an und erfasse ein Spiel — dann erscheint hier die Rangliste.",
+    "createPlayers": "Spieler anlegen"
+  },
+  "podium": {
+    "avgPoints": "Ø {value} Pkt.",
+    "gamesAndRate": "{count, plural, one {# Spiel} other {# Spiele}} · {rate}"
+  },
+  "table": {
+    "player": "Spieler",
+    "games": "Spiele",
+    "rate": "Quote",
+    "streak": "Serie",
+    "avgPoints": "Ø Punkte",
+    "points": "{points} Pkt.",
+    "specialWinsTitle": "Siege als Liebespaar oder Einzelgänger"
+  },
+  "factionLetter": {
+    "village": "D",
+    "werewolves": "W",
+    "solo": "S"
+  },
+  "footnote": "Sortiert nach Punkten pro Spiel (Punkte ÷ Spiele); qualifiziert ab {minGames, plural, one {# Spiel} other {# Spielen}}. D/W/S = Win-Rate als Dorf / Werwölfe / Solo, ★ = Siege als Liebespaar oder Einzelgänger.",
+  "scoring": {
+    "title": "Wie die Punkte entstehen",
+    "show": "anzeigen",
+    "hide": "ausblenden",
+    "intro": "Die Rangliste vergleicht den <strong>Punkteschnitt pro Spiel</strong>: Wie viele Spiele jemand gemacht hat, spielt keine Rolle — nur, was dabei herauskam. Und <strong>ein Sieg zählt umso mehr, je weniger Leute ihn sich teilen</strong>.",
+    "perGame": "Pro Spiel",
+    "win": "Sieg: {category}",
+    "loss": "Niederlage",
+    "lossHint": "Auch ohne Sieger (Patt, Abbruch) — das Spiel zählt trotzdem mit.",
+    "averageRule": "Schnitt = Punkte aller Spiele ÷ Anzahl Spiele. Wer doppelt so oft spielt und genauso abschneidet, steht exakt gleich da — darum gibt es weder Punkte fürs Mitspielen noch für Serien.",
+    "categoryRule": "Die Sieg-Kategorie kommt aus dem Sieg-Label des Spiels, nicht aus der Rollenkarte — wer als Wolfshund im Dorf gewinnt, bekommt Dorf-Punkte.",
+    "qualificationRule": "{minGames, plural, one {Ab # Spiel} other {Ab # Spielen}} ist man qualifiziert, damit kein einzelner Glückstreffer die Tabelle anführt. Wer darunter liegt, läuft grau und außer Konkurrenz mit.",
+    "tiebreakRule": "Bei gleichem Schnitt entscheidet die Siegquote; ist auch die gleich, teilt man sich den Platz."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "list": {
+    "title": "Games",
+    "record": "Record game",
+    "empty": "No games recorded yet.",
+    "summary": "{count, plural, one {# player} other {# players}} · Winner: {win}"
+  },
+  "mode": {
+    "live": "Live",
+    "quick": "Quick"
+  },
+  "detail": {
+    "back": "‹ Games",
+    "copy": "Copy",
+    "edit": "Edit",
+    "win": "Winner: <value>{win}</value>",
+    "moderator": "Moderator: {name}",
+    "columns": {
+      "player": "Player",
+      "role": "Role",
+      "faction": "Faction",
+      "result": "Result"
+    },
+    "won": "Win"
+  },
+  "edit": {
+    "back": "‹ Back to game",
+    "title": "Edit game",
+    "stillRunning": "This game is still in progress. You control a running live game in the live console; only finished games can be edited here afterwards."
+  },
+  "new": {
+    "titleCopy": "Copy game",
+    "titleRecord": "Record game"
+  },
+  "delete": {
+    "confirm": "Really delete this game?",
+    "busy": "Deleting …",
+    "button": "Delete game"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "mode": {
+    "quick": "Schnell erfassen",
+    "live": "Live moderieren"
+  },
+  "date": "Datum",
+  "moderator": "Moderator (optional)",
+  "noModerator": "— keiner —",
+  "assign": {
+    "heading": "Wer hatte welche Rolle?",
+    "hint": "Rolle wählen, dann alle antippen, die sie hatten.",
+    "remove": "{player}: {role} entfernen",
+    "add": "{player}: {role} zuweisen",
+    "fillVillagers": "{count, plural, one {Rest (#) ist Dorfbewohner} other {Rest (#) sind Dorfbewohner}}",
+    "trackDeaths": "Tod/Überleben erfassen"
+  },
+  "winner": "Sieger",
+  "details": {
+    "survivedAsk": "Überlebt?",
+    "survived": "Überlebt",
+    "died": "Gestorben",
+    "diedRound": "Todesrunde",
+    "cause": "Ursache"
+  },
+  "houseRule": {
+    "title": "Hausregel",
+    "revealLabel": "Rollen nach dem Tod aufdecken",
+    "revealHint": "Wer stirbt, zeigt seine Karte. Die Live-Konsole erinnert dich bei jedem Todesfall daran. Ohne Häkchen bleiben die Rollen bis zum Spielende verdeckt."
+  },
+  "display": {
+    "title": "Darstellung & Ton",
+    "narrationLabel": "Erzähltexte zum Vorlesen anzeigen",
+    "narrationHint": "Zu jedem Schritt eine kurze Geschichte, die du der Runde vorlesen kannst. Ohne Häkchen zeigt die Konsole nur die Handlungsanweisungen — schneller, aber nüchtern.",
+    "soundLabel": "Sound-Kulisse abspielen",
+    "soundHint": "Tagsüber Dorfleben mit Musik, nachts Grillen, Eulen und ferne Wölfe. Lässt sich im Spiel jederzeit über den Lautsprecher-Knopf an- und ausschalten."
+  },
+  "outcome": {
+    "winCondition": "Sieg-Bedingung",
+    "choose": "— wählen —",
+    "autoWinners": "Sieger automatisch nach Fraktion setzen",
+    "notes": "Notizen (optional)",
+    "notesPlaceholder": "z. B. Besonderheiten"
+  },
+  "status": {
+    "live": "{players, plural, one {# Spieler} other {# Spieler}} · Deck {deck}/{players}",
+    "quick": "{players, plural, one {# Spieler} other {# Spieler}} · {assigned}/{players} Rollen"
+  },
+  "submit": {
+    "busy": "Einen Moment …",
+    "edit": "Änderungen speichern",
+    "live": "Live-Spiel starten",
+    "quick": "Spiel speichern"
+  },
+  "errors": {
+    "minPlayers": "Mindestens 3 Mitspieler.",
+    "deckSize": "Das Deck braucht genau {needed} Rollen (aktuell {current}).",
+    "missingRole": "Jeder Mitspieler braucht eine Rolle.",
+    "missingWinCondition": "Bitte Sieg-Bedingung wählen.",
+    "saveFailed": "Fehler beim Speichern"
+  }
+}

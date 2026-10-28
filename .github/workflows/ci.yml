@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  # Called by the deploy workflow as a gate before a release.
+  workflow_call:
+
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  NEXT_TELEMETRY_DISABLED: 1
+  TURBO_TELEMETRY_DISABLED: 1
+
+jobs:
+  checks:
+    name: Typecheck · Test · Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @werewolf/api exec prisma generate
+      # turbo builds @werewolf/shared first (^build) and caches it within the job.
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+
+  migrations:
+    name: Prisma migrations
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: werewolf
+          POSTGRES_PASSWORD: werewolf
+          POSTGRES_DB: werewolf
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U werewolf"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://werewolf:werewolf@localhost:5432/werewolf?schema=public
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Production applies migrations when the API starts; check them on an empty database first.
+      - name: Apply migrations to an empty database
+        run: pnpm --filter @werewolf/api exec prisma migrate deploy
+      - name: Check that schema.prisma has no missing migration
+        run: |
+          pnpm --filter @werewolf/api exec prisma migrate diff \
+            --from-url "$DATABASE_URL" \
+            --to-schema-datamodel prisma/schema.prisma \
+            --exit-code \
+          || { echo "::error::schema.prisma differs from the migrations – did you forget 'pnpm --filter @werewolf/api prisma:migrate'?"; exit 1; }

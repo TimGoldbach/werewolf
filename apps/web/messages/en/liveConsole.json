@@ -1,0 +1,268 @@
+{
+  "winBanner": {
+    "werewolves": {
+      "title": "The werewolves triumph!",
+      "line": "The village sinks into howling and darkness."
+    },
+    "village": {
+      "title": "The village has survived!",
+      "line": "At daybreak, the last wolf has been hunted down."
+    },
+    "pied-piper": {
+      "title": "The Pied Piper wins!",
+      "line": "One last melody — and the whole village dances to his tune."
+    },
+    "white-werewolf": {
+      "title": "The White Werewolf stands alone.",
+      "line": "Nobody else survived this night."
+    },
+    "lovers": {
+      "title": "The lovers win!",
+      "line": "United against everyone — to the very end."
+    },
+    "angel": {
+      "title": "The Angel is set free!",
+      "line": "Fallen in the first round — and free at last."
+    },
+    "gull": {
+      "title": "The Seagull got everyone!",
+      "line": "Not a single head stayed clean — shrieking, she circles over the village."
+    },
+    "vampire": {
+      "title": "The vampires keep the night!",
+      "line": "No heart still beats that does not belong to them."
+    },
+    "serial-killer": {
+      "title": "The Serial Killer is the last one left.",
+      "line": "He wipes the blade clean. There is no one left to watch."
+    },
+    "demon": {
+      "title": "The Demon has devoured the village.",
+      "line": "Whoever reached for him reached into darkness — and stayed there."
+    },
+    "stone-golem": {
+      "title": "The Stone Golem is the last one standing.",
+      "line": "Nothing but dust around him. He does not move — he no longer has to."
+    },
+    "werehamster": {
+      "title": "The Werehamster triumphs!",
+      "line": "No wolf howls anymore. Only a soft rustling in the straw."
+    },
+    "frida": {
+      "title": "Frida got what she wanted.",
+      "line": "Eaten at last — and at long, long last no longer shy."
+    },
+    "jason": {
+      "title": "This is exactly what Jason wanted.",
+      "line": "The village lynched him. He is still smiling on the rope."
+    },
+    "bella": {
+      "title": "Bella was bitten — her dream came true!",
+      "line": "Two little wounds on her neck, and it was all worth it."
+    },
+    "hermione": {
+      "title": "Hermione saw through everyone!",
+      "line": "Every role matched correctly — the village never stood a chance of keeping secrets."
+    },
+    "rascal": {
+      "title": "The Rascal won his bet!",
+      "line": "Everyone he bet on is six feet under. He cashes in."
+    },
+    "groom": {
+      "title": "The Groom takes three brides home!",
+      "line": "One cycle survived, three rings given — let the wedding begin."
+    },
+    "blob": {
+      "title": "The village is one single Blob.",
+      "line": "Everything alive has been absorbed. Only a gurgling remains."
+    },
+    "leech": {
+      "title": "The Leech has drained everyone!",
+      "line": "Not a drop is left where a village stood a moment ago."
+    },
+    "none": {
+      "title": "Nobody survived.",
+      "line": "The village lies deserted in the fog."
+    }
+  },
+  "toResults": "View results",
+  "phase": {
+    "night": "Night",
+    "day": "Day",
+    "setup": "Setup"
+  },
+  "round": "Round {round}",
+  "revealRolesRule": {
+    "title": "This game is played with roles revealed on death",
+    "label": "Reveal roles"
+  },
+  "connection": {
+    "liveTitle": "Synced live across all devices with this link",
+    "live": "Live",
+    "lostTitle": "No connection – what you see may be out of date",
+    "lost": "Connection lost"
+  },
+  "sound": {
+    "turnOff": "Turn sound off",
+    "turnOn": "Turn sound on",
+    "on": "Sound: on",
+    "off": "Sound: off"
+  },
+  "possibleEnd": "Possible end of game: <strong>{label}</strong>",
+  "finishNow": "Score now",
+  "finish": "Score",
+  "finishManually": "Finish game manually",
+  "finishConfirm": "Finish and score the game?",
+  "undo": "Undo",
+  "sending": "Sending…",
+  "next": "Next",
+  "dogBlocked": "Guarded by the Dog — this player has no ability tonight. Call them anyway for show, then continue.",
+  "errors": {
+    "action": "Action failed — please try again.",
+    "sound": "Could not switch the sound.",
+    "undo": "Undo failed.",
+    "finish": "Finishing failed — please try again."
+  },
+  "hunter": {
+    "title": "{name}: The Hunter takes someone down with him!",
+    "shoot": "Shoot"
+  },
+  "winModal": {
+    "title": "Possible end of game",
+    "condition": "Win condition: <strong>{label}</strong>",
+    "keepPlaying": "Keep playing",
+    "hint": "Proposal not right? Keep playing — the outcome can be corrected in the game editor after scoring."
+  },
+  "narration": {
+    "readAloud": "Read aloud",
+    "rerollTitle": "Show a different narration for this step",
+    "reroll": "New story",
+    "quote": "“{lore}”"
+  },
+  "timer": {
+    "title": "Day timer",
+    "button": "Timer",
+    "close": "Close",
+    "expired": "Time is up!",
+    "minutes": "{minutes} min",
+    "less": "30 seconds less",
+    "more": "30 seconds more",
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Resume",
+    "reset": "Reset"
+  },
+  "rusty": {
+    "title": "Rusty sword: {name} was eaten",
+    "instruction": "Which werewolf sits closest clockwise? He falls ill and dies on the morning of the day after next – if he dies before that, nothing happens.",
+    "noWolves": "No living werewolf left — the infection lapses.",
+    "pickWolf": "Choose werewolf…",
+    "infect": "Infect",
+    "reminderTonight": "<strong>{name}</strong> was infected by the rusty sword and dies when this night is resolved.",
+    "reminderLater": "<strong>{name}</strong> was infected by the rusty sword and dies on the morning of the day after next."
+  },
+  "revealReminder": {
+    "title": "<strong>{count, plural, one {Reveal role} other {Reveal roles}}</strong> — in this game, cards are shown after death.",
+    "was": "<strong>{name}</strong> had the {role} card",
+    "unassigned": "No role in the system yet: {names} — assign first, then reveal."
+  },
+  "playerSelect": {
+    "placeholder": "Choose target…"
+  },
+  "control": {
+    "checkPlayer": "Check player…",
+    "trueRole": "True role: <strong>{role}</strong>",
+    "chooseVictim": "Choose victim",
+    "werewolfVictim": "Werewolves’ victim",
+    "harlotInDen": "The Harlot is staying with a werewolf – <strong>{name}</strong> is eaten instead.",
+    "extraVictim": "Extra victim",
+    "secondVictim": "Second victim",
+    "infect": "Infect / turn into wolf",
+    "pickHost": "Choose host…",
+    "stayOver": "Stay over",
+    "staysWithWolf": "Staying with a werewolf (gets eaten)",
+    "staysWith": "Staying with (untouchable)",
+    "guardPerson": "Guard player…",
+    "guard": "Guard",
+    "blocked": "Blocked (alibi only)",
+    "pickPoet": "Choose poet…",
+    "makePoet": "Make poet",
+    "poet": "Speaks in rhymes tomorrow",
+    "gullDone": "All living players have been hit — the Seagull has reached her goal.",
+    "gullPick": "Hit a head…",
+    "gullMark": "Poop on",
+    "gullHit": "Hit ({hit}/{total} alive)",
+    "loverA": "Lover A",
+    "loverB": "Lover B",
+    "setLovers": "Set lovers",
+    "lovers": "Lovers",
+    "charmTarget1": "Target 1",
+    "charmTarget2": "Target 2",
+    "charm": "Charm",
+    "charmed": "Charmed",
+    "noWolfHound": "No Wolf-Hound in the game.",
+    "sideVillage": "Village",
+    "sideWerewolves": "Werewolves",
+    "sideChosen": "Decided for",
+    "sideChosenVillage": "the village",
+    "sideChosenWerewolves": "the werewolves",
+    "witchVictim": "Werewolf victim: <strong>{name}</strong>",
+    "witchNoVictim": "none chosen yet",
+    "harlotWithWolf": "Harlot with a werewolf",
+    "heal": "Healing potion",
+    "poisonPick": "poison…",
+    "poison": "Poison potion",
+    "healSaves": "Healing potion saves",
+    "poisonHits": "Poison potion hits",
+    "pickMayor": "Choose mayor…",
+    "appoint": "Appoint",
+    "mayor": "Mayor",
+    "resolveNight": "Resolve night",
+    "hunterFirst": "Hunter’s shot first…",
+    "startDay": "Start day",
+    "startFirstNight": "Start first night",
+    "startNextNight": "Start next night",
+    "lynchPick": "Lynched…",
+    "lynch": "Lynch",
+    "noWildChild": "No Wild Child in the game.",
+    "modelPick": "Role model…",
+    "rememberModel": "Note role model",
+    "model": "Role model",
+    "whiteWolfPick": "Kill werewolf…",
+    "whiteWolfKill": "Kill werewolf",
+    "whiteWolfKills": "White Werewolf kills",
+    "openingDay": "Start with a day"
+  },
+  "nightDeaths": {
+    "none": "A quiet night — nobody died.",
+    "title": "Died this night ({count})",
+    "showRolesAndCauses": "Show roles & causes of death",
+    "showCauses": "Show causes of death"
+  },
+  "spoiler": {
+    "concealed": "Roles hidden",
+    "concealedHint": "{alive}/{total} alive · others may look",
+    "reveal": "Reveal",
+    "revealed": "Revealed",
+    "revealedHint": "– for your eyes only",
+    "conceal": "Hide"
+  },
+  "secretTask": {
+    "title": "Secret task pending",
+    "hint": "For you only – reveal it when nobody is looking.",
+    "reveal": "Reveal"
+  },
+  "assign": {
+    "question": "Who has the {role} card?",
+    "questionRemaining": "Who has the {role} card? ({count} left to pick)",
+    "noCandidates": "No unassigned player left – this role is not assigned to anyone (anymore). Skip the step with “Next →”.",
+    "pickPerson": "Choose player…",
+    "assign": "Assign",
+    "manualTitle": "Assign roles manually ({count} open)",
+    "manualHint": "For roles that do not wake up at night (e.g. Hunter, Elder, Knight) – assign them here, otherwise their death effects will not trigger.",
+    "rolePlaceholder": "— Role —",
+    "ok": "OK",
+    "revealUnassigned": "Role of <strong>{name}</strong> not assigned yet — pick it from the card:",
+    "assignAndReveal": "Assign & reveal"
+  }
+}

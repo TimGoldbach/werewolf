@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "nightFalls": "Night is falling",
+    "dayBreaks": "A new day dawns",
+    "tagline": "Record games, moderate the night and see in black and white who really pulls the strings in the village.",
+    "startGame": "Start a game",
+    "toLeaderboard": "To the leaderboard",
+    "soundOff": "Turn sound off",
+    "soundOn": "Turn sound on",
+    "ambienceOn": "{scene, select, night {Night} other {Day}} ambience: on",
+    "ambienceOff": "{scene, select, night {Night} other {Day}} ambience: off"
+  },
+  "tiles": {
+    "leaderboard": "Points, win streaks and who currently leads the village.",
+    "games": "All recorded nights — view, copy, correct.",
+    "players": "Manage and archive the people of the village.",
+    "stats": "Roles, factions, causes of death and trends."
+  },
+  "tileCounts": {
+    "leader": "{name} leads",
+    "tied": "{count} tied for 1st place",
+    "games": "{count, plural, one {# game} other {# games}}",
+    "active": "{count} active",
+    "ranked": "{count, plural, one {# player ranked} other {# players ranked}}"
+  },
+  "unknownPlayer": "Unknown",
+  "viewAll": "All ›",
+  "live": {
+    "running": "Live game in progress",
+    "meta": "{date} · {count, plural, one {# player} other {# players}}",
+    "continue": "Keep moderating"
+  },
+  "empty": {
+    "title": "The village is still asleep",
+    "text": "Add your players and record your first game — then this page will come to life.",
+    "addPlayers": "Add players",
+    "recordGame": "Record a game"
+  },
+  "top": {
+    "title": "Top of the village",
+    "empty": "The podium appears here from {minGames, plural, one {# game} other {# games}} on.",
+    "average": "Avg"
+  },
+  "balance": {
+    "title": "Village vs. werewolves",
+    "village": "Village",
+    "others": "Others",
+    "werewolves": "Werewolves",
+    "summary": "Wins across {count, plural, one {# finished game} other {# finished games}}."
+  },
+  "recent": {
+    "title": "Recently played",
+    "win": "Winner: {condition}",
+    "playerUnit": "{count, plural, one {player} other {players}}"
+  }
+}

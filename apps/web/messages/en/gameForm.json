@@ -1,0 +1,61 @@
+{
+  "mode": {
+    "quick": "Quick entry",
+    "live": "Moderate live"
+  },
+  "date": "Date",
+  "moderator": "Moderator (optional)",
+  "noModerator": "— none —",
+  "assign": {
+    "heading": "Who had which role?",
+    "hint": "Pick a role, then tap everyone who had it.",
+    "remove": "{player}: remove {role}",
+    "add": "{player}: assign {role}",
+    "fillVillagers": "{count, plural, one {Remaining (#) is a villager} other {Remaining (#) are villagers}}",
+    "trackDeaths": "Record death/survival"
+  },
+  "winner": "Winner",
+  "details": {
+    "survivedAsk": "Survived?",
+    "survived": "Survived",
+    "died": "Died",
+    "diedRound": "Round of death",
+    "cause": "Cause"
+  },
+  "houseRule": {
+    "title": "House rule",
+    "revealLabel": "Reveal roles on death",
+    "revealHint": "Whoever dies shows their card. The live console reminds you at every death. Without the checkmark, roles stay hidden until the end of the game."
+  },
+  "display": {
+    "title": "Display & sound",
+    "narrationLabel": "Show narration texts to read aloud",
+    "narrationHint": "A short story for each step that you can read to the group. Without the checkmark, the console shows only the instructions — faster, but dry.",
+    "soundLabel": "Play ambient sound",
+    "soundHint": "Village life with music by day, crickets, owls and distant wolves by night. You can switch it on and off at any time in the game with the speaker button."
+  },
+  "outcome": {
+    "winCondition": "Win condition",
+    "choose": "— choose —",
+    "autoWinners": "Set winners automatically by faction",
+    "notes": "Notes (optional)",
+    "notesPlaceholder": "e.g. anything special"
+  },
+  "status": {
+    "live": "{players, plural, one {# player} other {# players}} · Deck {deck}/{players}",
+    "quick": "{players, plural, one {# player} other {# players}} · {assigned}/{players} roles"
+  },
+  "submit": {
+    "busy": "One moment …",
+    "edit": "Save changes",
+    "live": "Start live game",
+    "quick": "Save game"
+  },
+  "errors": {
+    "minPlayers": "At least 3 players.",
+    "deckSize": "The deck needs exactly {needed} roles (currently {current}).",
+    "missingRole": "Every player needs a role.",
+    "missingWinCondition": "Please choose a win condition.",
+    "saveFailed": "Error while saving"
+  }
+}

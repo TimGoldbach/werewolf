@@ -1,0 +1,116 @@
+// Werewolf — data model
+// Event sourcing: GameEvent is the append-only source of truth for live games.
+// GamePlayer is the materialized result projection (also for quick entry).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum GameStatus {
+  SETUP
+  LIVE
+  FINISHED
+  ABORTED
+}
+
+enum GameMode {
+  QUICK
+  LIVE
+}
+
+model Player {
+  id          String   @id @default(cuid())
+  displayName String   @unique
+  active      Boolean  @default(true)
+  /// created in test mode — removed when leaving test mode
+  generated   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  gamePlayers GamePlayer[]
+  moderated   Game[]       @relation("Moderator")
+
+  @@index([active])
+  @@index([generated])
+}
+
+model Game {
+  id               String     @id @default(cuid())
+  status           GameStatus @default(FINISHED)
+  mode             GameMode
+  playedAt         DateTime   @default(now())
+  roleSetVersion   String
+  winningCondition String?
+  rounds           Int?
+  notes            String?
+  /// Live game: are roles revealed on death? null = unknown
+  /// (quick games and live games recorded before this setting existed).
+  revealRolesOnDeath Boolean?
+  /// Live console: show the narration texts to read aloud? Presentation only, not a
+  /// house rule — hence a default instead of nullable.
+  showNarration      Boolean    @default(true)
+  /// Live console: play the day/night soundscape? Presentation only, switchable during
+  /// the game.
+  soundEnabled       Boolean    @default(true)
+  /// The group's feedback on the set (role combination): 1 (flop) to 5 (top). Weights the
+  /// set suggestions. null = not rated — counts as neutral there.
+  setRating          Int?
+  /// generated in test mode — removed when leaving test mode
+  generated        Boolean    @default(false)
+  moderatorId      String?
+  moderator        Player?    @relation("Moderator", fields: [moderatorId], references: [id], onDelete: SetNull)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  players GamePlayer[]
+  events  GameEvent[]
+
+  @@index([playedAt])
+  @@index([status])
+  @@index([generated])
+}
+
+model GamePlayer {
+  id           String   @id @default(cuid())
+  gameId       String
+  game         Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  playerId     String
+  player       Player   @relation(fields: [playerId], references: [id], onDelete: Restrict)
+  // In live games the role is initially null and only assigned when the role first wakes up.
+  roleId       String?
+  roleVersion  String
+  finalFaction String?
+  isWinner     Boolean  @default(false)
+  survived     Boolean?
+  diedRound    Int?
+  deathCause   String?
+
+  @@unique([gameId, playerId])
+  @@index([playerId])
+  @@index([roleId])
+}
+
+model GameEvent {
+  id        String   @id @default(cuid())
+  gameId    String
+  game      Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  seq       Int
+  type      String
+  payload   Json
+  createdAt DateTime @default(now())
+
+  @@unique([gameId, seq])
+  @@index([gameId])
+}
+
+/// Single-row global app state (id is always 1).
+model AppState {
+  id        Int      @id @default(1)
+  testMode  Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+}

@@ -1,0 +1,72 @@
+{
+  "metaTitle": "Spielregeln · {appName}",
+  "metaDescription": "Spielablauf, Siegbedingungen und alle Rollen in Kurzform",
+  "toApp": "Zur App",
+  "toLogin": "Zum Login",
+  "title": "Spielregeln",
+  "intro": "Werwolf nach dem Einheitlichen Regelwerk — kurz erklärt, damit alle mit denselben Regeln an den Tisch kommen.",
+  "about": {
+    "title": "Worum es geht",
+    "intro": "In einem Dorf verstecken sich Werwölfe. Jede Person bekommt geheim eine Rolle und gehört damit zu einer Seite:",
+    "village": "<hl>Dorf</hl> — findet die Werwölfe und schaltet sie per Abstimmung aus.",
+    "werewolves": "<hl>Werwölfe</hl> — fressen nachts heimlich Dorfbewohner und tarnen sich tagsüber als harmlose Nachbarn.",
+    "loners": "<hl>Einzelgänger</hl> — verfolgen ein eigenes Ziel und gewinnen allein.",
+    "ambiguous": "<hl>Zweideutige</hl> — können im Lauf der Partie die Seite wechseln."
+  },
+  "setup": {
+    "title": "Vorbereitung",
+    "moderator": "Eine Person ist <hl>Spielleiter</hl>: spielt nicht mit, kennt alle Rollen, führt durch Nacht und Tag und hat bei Regelfragen das letzte Wort.",
+    "cards": "Die Rollenkarten werden verdeckt verteilt. Jede Person schaut ihre Karte geheim an und zeigt sie niemandem.",
+    "recommendation": "Empfehlung: bis 12 Personen 2–3 Werwölfe, darüber 3–4."
+  },
+  "night": {
+    "title": "Die Nacht",
+    "sleep": "Alle schließen die Augen. Der Spielleiter weckt die Rollen einzeln in einer festen Reihenfolge.",
+    "act": "Wer geweckt wird, handelt stumm per Zeigen und Nicken und schläft danach wieder ein.",
+    "firstNight": "In der ersten Nacht wachen zusätzlich Rollen auf, die das Spiel vorbereiten — etwa Amor, der Dieb oder das wilde Kind.",
+    "wolves": "Die Werwölfe erwachen gemeinsam und einigen sich auf ein Opfer. Einen anderen Werwolf dürfen sie nicht fressen."
+  },
+  "day": {
+    "title": "Der Tag",
+    "wake": "Alle wachen auf, und der Spielleiter verkündet, wer in der Nacht gestorben ist. Tote decken ihre Karte auf und dürfen ab jetzt nichts mehr verraten.",
+    "mayor": "Am ersten Tag wählt das Dorf einen <hl>Bürgermeister</hl>. Seine Stimme zählt doppelt, er entscheidet Gleichstände und bestimmt bei seinem Tod einen Nachfolger.",
+    "vote": "Das Dorf diskutiert und stimmt ab. Wer die meisten Stimmen bekommt, wird gelyncht, deckt seine Karte auf und scheidet aus. Bei Gleichstand entscheidet der Bürgermeister.",
+    "nextNight": "Danach bricht die nächste Nacht an — bis eine Siegbedingung erfüllt ist.",
+    "startWithDay": "Auf Wunsch beginnt die Partie mit einem Tag statt mit einer Nacht."
+  },
+  "death": {
+    "title": "Tod, Liebe und Kettenreaktionen",
+    "triggers": "Manche Rollen lösen beim Tod etwas aus oder sterben nicht so leicht: Der Jäger reißt jemanden mit in den Tod, der Alte überlebt den ersten Werwolf-Angriff, und am Ritter mit der rostigen Klinge stirbt ein Wolf, der ihn gefressen hat. Details stehen bei den Rollen.",
+    "cupid": "Amor verkuppelt in der ersten Nacht zwei Personen. Stirbt eine davon, stirbt die andere aus Kummer mit.",
+    "lovers": "Gehören die Verliebten zu verschiedenen Seiten, spielen sie gemeinsam gegen alle anderen und gewinnen, wenn nur noch sie beide leben."
+  },
+  "win": {
+    "title": "Wer gewinnt?",
+    "tieBreak": "Sind mehrere Bedingungen gleichzeitig erfüllt, gilt die weiter oben stehende."
+  },
+  "table": {
+    "title": "Am Tisch",
+    "cards": "Die eigene Karte niemals zeigen — reden, bluffen und lügen ist erlaubt.",
+    "night": "Nachts nicht blinzeln und keine Geräusche machen, die etwas verraten.",
+    "dead": "Tote schweigen und geben keine Hinweise mehr."
+  },
+  "allRoles": "Alle Rollen",
+  "roleGuide": {
+    "searchPlaceholder": "Rolle suchen …",
+    "searchLabel": "Rolle suchen",
+    "categoriesLabel": "Rollen-Kategorien",
+    "noMatch": "Keine Rolle passt zu „{query}\".",
+    "aliases": "auch: {names}",
+    "wake": {
+      "first": "1. Nacht",
+      "every": "jede Nacht",
+      "night": "nachts"
+    },
+    "intro": {
+      "werewolves": "Erwachen nachts als Rudel, fressen gemeinsam ein Opfer und gewinnen zusammen.",
+      "villagers": "Gewinnen mit dem Dorf. Die meisten haben eine Sonderfähigkeit, die dem Dorf hilft.",
+      "ambiguous": "Starten auf einer Seite, können im Lauf der Partie aber die Seite oder ihre Rolle wechseln.",
+      "loners": "Verfolgen ein eigenes Ziel und gewinnen in der Regel allein."
+    }
+  }
+}

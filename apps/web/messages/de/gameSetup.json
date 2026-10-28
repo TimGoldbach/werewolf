@@ -1,0 +1,45 @@
+{
+  "shortRole": {
+    "werewolf": "Werwolf",
+    "villager": "Dorfbewohner"
+  },
+  "deck": {
+    "title": "Rollen im Spiel",
+    "hint": "Antippen = eine mehr. Wer welche Rolle hat, trägst du erst im Spiel ein, sobald sie erwacht.",
+    "addRole": "{name} hinzufügen",
+    "addRoleCounted": "{name} hinzufügen (bisher {count})",
+    "removeOne": "{name}: eine weniger",
+    "searchPlaceholder": "+ Weitere Rolle aus dem Katalog …",
+    "roleCount": "{deck}/{players} Rollen",
+    "factionShort": {
+      "werewolves": "Wölfe",
+      "village": "Dorf",
+      "variable": "variable",
+      "solo": "Solo"
+    },
+    "wolfRule": "Faustregel bei {players} Spielern: {count} Werwölfe.",
+    "fillVillagers": "Rest auffüllen: +{count} Dorfbewohner",
+    "tooMany": "{count, plural, one {# Rolle zu viel} other {# Rollen zu viel}}",
+    "clear": "Deck leeren"
+  },
+  "picker": {
+    "heading": "Wer spielt mit?",
+    "deselectAll": "Alle abwählen",
+    "lastTime": "Wie zuletzt:",
+    "searchPlaceholder": "Suchen oder neu anlegen …",
+    "create": "Anlegen",
+    "createFailed": "Spieler konnte nicht angelegt werden.",
+    "moderatorTitle": "Moderiert dieses Spiel — antippen, um stattdessen mitzuspielen",
+    "moderatorTag": "· Moderator",
+    "noneNamed": "Niemand namens „{name}\" — mit „Anlegen\" neu hinzufügen.",
+    "noMatch": "Kein Treffer.",
+    "emptyRoster": "Noch niemand im Kader — oben einen Namen eingeben und anlegen."
+  },
+  "palette": {
+    "groupLabel": "Rolle zum Zuweisen",
+    "searchPlaceholder": "Andere Rolle suchen …"
+  },
+  "roleSearch": {
+    "searchPlaceholder": "Rolle suchen …"
+  }
+}

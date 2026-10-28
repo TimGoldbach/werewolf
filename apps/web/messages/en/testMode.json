@@ -1,0 +1,11 @@
+{
+  "banner": "Test mode active — new data is temporary.",
+  "title": "Test / Debug",
+  "generate": "+ Generate test games",
+  "end": "End test mode & clean up",
+  "activate": "Enable test mode",
+  "confirmEnd": "End test mode? All games and players created in test mode will be permanently deleted.",
+  "purged": "Cleaned up: deleted {games, plural, one {# game} other {# games}} and {players, plural, one {# player} other {# players}}.",
+  "generated": "{count, plural, one {# test game} other {# test games}} generated.",
+  "info": "In test mode, all new games & players are marked as temporary and deleted again when you end it — ideal for trying out the stats."
+}

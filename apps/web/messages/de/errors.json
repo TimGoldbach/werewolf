@@ -1,0 +1,17 @@
+{
+  "unknown": "Unbekannter Fehler",
+  "network": "Keine Verbindung zum Server",
+  "NOT_AUTHENTICATED": "Nicht eingeloggt",
+  "WRONG_PASSWORD": "Falsches Passwort",
+  "VALIDATION_FAILED": "Die Eingaben sind unvollständig oder ungültig.",
+  "PLAYER_NOT_FOUND": "Spieler nicht gefunden.",
+  "PLAYER_NAME_TAKEN": "Dieser Name ist bereits vergeben.",
+  "UNKNOWN_PLAYERS": "Unbekannte(r) Spieler.",
+  "DUPLICATE_PLAYERS": "Spieler doppelt im Spiel.",
+  "UNKNOWN_ROLES": "Unbekannte Rolle(n).",
+  "GAME_NOT_FOUND": "Spiel nicht gefunden.",
+  "GAME_NOT_FINISHED": "Das geht erst, wenn das Spiel abgeschlossen ist.",
+  "GAME_ALREADY_FINISHED": "Das Spiel ist bereits abgeschlossen.",
+  "UNKNOWN_EVENT_TYPE": "Unbekannte Aktion.",
+  "TEST_MODE_REQUIRED": "Bitte zuerst den Testmodus aktivieren."
+}

@@ -1,0 +1,25 @@
+{
+  "suggestions": {
+    "noneForCount": "You haven't played a set with {playerCount} players yet — after your first game it will show up here as a suggestion.",
+    "title": "Your sets for {playerCount} players",
+    "info": "Sorted by games × feedback: at ⌀ ★★★ every game counts once, each star more doubles it, each star fewer halves it.",
+    "showLess": "Show fewer",
+    "showAll": "Show all {count} sets",
+    "suggested": "Suggested",
+    "timesPlayed": "played {count}×",
+    "inDeck": "✓ In deck",
+    "apply": "Apply",
+    "ratingFrom": "{avg} from {count, plural, one {# rating} other {# ratings}}",
+    "noFeedback": "no feedback yet",
+    "lastPlayed": "last played {date}",
+    "outcomes": "Outcome: {outcomes}"
+  },
+  "feedback": {
+    "question": "How did you like the set?",
+    "heading": "Set feedback",
+    "hint": "The better your rating, the more often this role combination will be suggested again for {playerCount} players.",
+    "rateGroup": "Rate set",
+    "starLabel": "{value} of 5 – {label}",
+    "saveFailed": "Saving failed."
+  }
+}

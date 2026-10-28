@@ -1,0 +1,41 @@
+{
+  "overview": "Übersicht · {alive}/{total} leben",
+  "round": "Runde {round}",
+  "setup": "Aufstellung",
+  "longPressTip": "Tipp: Person gedrückt halten, um Rolle oder Lebend/Tot-Status zu ändern.",
+  "longPressTitle": "Gedrückt halten, um die Rolle zu bearbeiten",
+  "gullMarked": "Von der Möwe angekackt",
+  "mayor": "Bürgermeister",
+  "alive": "lebt",
+  "diedRound": "R{round}",
+  "roleOpen": "Rolle noch offen",
+  "chips": {
+    "loverWith": "♥ verliebt mit {name}",
+    "charmed": "betört",
+    "extraLife": "Extra-Leben",
+    "model": "Vorbild: {name}",
+    "wolfVictim": "Wolfsopfer",
+    "whiteWolfTarget": "Ziel: Weißer Wolf",
+    "poisoned": "vergiftet",
+    "protected": "geschützt",
+    "hunterShoots": "Jäger schießt!",
+    "rustyBlade": "rostige Klinge †",
+    "blocked": "blockiert (Hund)",
+    "poet": "Poet",
+    "harlotInDen": "bei {name} · Wolfshöhle",
+    "harlotSafe": "bei {name} · unantastbar"
+  },
+  "edit": {
+    "label": "Person bearbeiten",
+    "close": "Schließen",
+    "role": "Rolle",
+    "roleOpen": "— Rolle offen —",
+    "status": "Status",
+    "alive": "Lebt",
+    "dead": "Gestorben",
+    "deathCause": "Todesursache",
+    "pickCause": "— Ursache wählen —",
+    "save": "Speichern",
+    "cancel": "Abbrechen"
+  }
+}

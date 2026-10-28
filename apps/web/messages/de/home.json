@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "nightFalls": "Die Nacht bricht herein",
+    "dayBreaks": "Der Tag bricht an",
+    "tagline": "Spiele erfassen, die Nacht moderieren und schwarz auf weiß sehen, wer im Dorf wirklich die Fäden zieht.",
+    "startGame": "Spiel starten",
+    "toLeaderboard": "Zur Rangliste",
+    "soundOff": "Ton ausschalten",
+    "soundOn": "Ton einschalten",
+    "ambienceOn": "{scene, select, night {Nacht} other {Tag}}-Kulisse: an",
+    "ambienceOff": "{scene, select, night {Nacht} other {Tag}}-Kulisse: aus"
+  },
+  "tiles": {
+    "leaderboard": "Punkte, Siegesserien und wer das Dorf gerade anführt.",
+    "games": "Alle erfassten Nächte — ansehen, kopieren, korrigieren.",
+    "players": "Die Dorfgemeinschaft verwalten und archivieren.",
+    "stats": "Rollen, Fraktionen, Todesursachen und Verläufe."
+  },
+  "tileCounts": {
+    "leader": "{name} führt",
+    "tied": "{count} teilen Platz 1",
+    "games": "{count, plural, one {# Spiel} other {# Spiele}}",
+    "active": "{count} aktiv",
+    "ranked": "{count} Spieler gewertet"
+  },
+  "unknownPlayer": "Unbekannt",
+  "viewAll": "Alle ›",
+  "live": {
+    "running": "Live-Spiel läuft",
+    "meta": "{date} · {count} Spieler",
+    "continue": "Weiter moderieren"
+  },
+  "empty": {
+    "title": "Noch ruht das Dorf",
+    "text": "Lege die Spieler an und erfasse das erste Spiel — dann füllt sich diese Seite mit Leben.",
+    "addPlayers": "Spieler anlegen",
+    "recordGame": "Spiel erfassen"
+  },
+  "top": {
+    "title": "Spitze des Dorfes",
+    "empty": "{minGames, plural, one {Ab # Spiel} other {Ab # Spielen}} erscheint hier das Podium.",
+    "average": "Ø"
+  },
+  "balance": {
+    "title": "Dorf gegen Wölfe",
+    "village": "Dorf",
+    "others": "Sonstige",
+    "werewolves": "Werwölfe",
+    "summary": "{count, plural, one {Siege über # abgeschlossenes Spiel.} other {Siege über # abgeschlossene Spiele.}}"
+  },
+  "recent": {
+    "title": "Zuletzt gespielt",
+    "win": "Sieg: {condition}",
+    "playerUnit": "Spieler"
+  }
+}
