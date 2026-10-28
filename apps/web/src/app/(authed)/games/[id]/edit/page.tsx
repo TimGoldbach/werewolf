@@ -5,7 +5,7 @@ import { getTranslations } from 'next-intl/server'
 import { QuickGameForm } from '@/components/quick-game-form'
 import { Card, CardContent } from '@/components/ui/card'
 import { gameToPrefill } from '@/lib/game-prefill'
-import { ApiError, serverFetch } from '@/lib/server-api'
+import { ApiError, fetchHiddenRoleIds, serverFetch } from '@/lib/server-api'
 import { buildSetupHints } from '@/lib/setup-hints'
 import type { GameListItem } from '@/lib/types'
 
@@ -20,6 +20,9 @@ export default async function EditGamePage({ params }: { params: { id: string } 
     if (e instanceof ApiError && e.status === 404) notFound()
     throw e
   }
+  // Roles this game was played with stay selectable even if the group has hidden them since.
+  const gameRoles = new Set(game.players.map((p) => p.roleId))
+  const hiddenRoleIds = (await fetchHiddenRoleIds()).filter((id) => !gameRoles.has(id))
 
   return (
     <div className="flex flex-col gap-6">
@@ -42,7 +45,8 @@ export default async function EditGamePage({ params }: { params: { id: string } 
           players={await serverFetch<Player[]>('/players?includeArchived=true')}
           initial={gameToPrefill(game, { forEdit: true })}
           editGameId={game.id}
-          hints={buildSetupHints(await serverFetch<GameListItem[]>('/games'))}
+          hints={buildSetupHints(await serverFetch<GameListItem[]>('/games'), hiddenRoleIds)}
+          hiddenRoleIds={hiddenRoleIds}
         />
       )}
     </div>

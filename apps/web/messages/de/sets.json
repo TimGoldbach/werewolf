@@ -1,6 +1,7 @@
 {
   "suggestions": {
     "noneForCount": "Mit {playerCount} Spielern habt ihr noch kein Set gespielt — nach eurer ersten Partie taucht es hier als Vorschlag auf.",
+    "allHidden": "Jedes Set, das ihr mit {playerCount} Spielern gespielt habt, enthält eine Rolle, die eure Gruppe ausgeblendet hat.",
     "title": "Eure Sets für {playerCount} Spieler",
     "info": "Sortiert nach Spielen × Feedback: Bei ⌀ ★★★ zählt jedes Spiel einfach, jeder Stern mehr verdoppelt, jeder weniger halbiert.",
     "showLess": "Weniger anzeigen",

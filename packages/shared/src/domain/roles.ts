@@ -1389,6 +1389,33 @@ export const FIRST_NIGHT_RECORD_ORDER: string[] = [
   'brewer',
 ]
 
+/**
+ * The classic base roles. A new group starts with the full catalog; the "classics only" preset
+ * hides everything else so the role lists stay short until the group wants more.
+ */
+export const CLASSIC_ROLE_IDS: readonly string[] = [
+  'werewolf',
+  'accursed-wolf-father',
+  'big-bad-wolf',
+  'white-werewolf',
+  'pied-piper',
+  'angel',
+  'wild-child',
+  'wolf-hound',
+  'cupid',
+  'seer',
+  'two-sisters',
+  'little-girl',
+  'fox',
+  'rusty-sword-knight',
+  'elder',
+  'witch',
+  'bear-tamer',
+  'hunter',
+  'mayor',
+  'villager',
+]
+
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 const ROLE_BY_ID = new Map(ROLE_CATALOG.map((r) => [r.id, r]))

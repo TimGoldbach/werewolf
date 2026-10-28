@@ -46,9 +46,9 @@ The UI and all game content exist in English and German.
 
 Auth is a single password gate with no player identities. A correct password sets an
 HttpOnly cookie holding a signed JWT, and a Nest guard protects every endpoint except
-login, health and the public rules page. The password is configured as a bcrypt hash
-(`GATE_PASSWORD_HASH`) or, for development, in plain text. Players are plain records;
-whoever uses the app is implicitly the moderator.
+login, health and reading the hidden roles (the public rules page needs them). The
+password is configured as a bcrypt hash (`GATE_PASSWORD_HASH`) or, for development, in
+plain text. Players are plain records; whoever uses the app is implicitly the moderator.
 
 ## Domain
 
@@ -67,6 +67,11 @@ whoever uses the app is implicitly the moderator.
 - **Versioned catalog.** Games store the role id and the catalog version
   (`ROLE_CATALOG_VERSION`), so later changes do not reinterpret history. Lovers are
   not a card (Cupid creates them) but are modelled as a win condition.
+- **Groups hide roles, they don't edit them.** New roles arrive by pull request (see
+  [CONTRIBUTING.md](../CONTRIBUTING.md)). On the Roles page a group only hides the
+  built-in roles it doesn't play (`HiddenRole`), or picks the "classics only"
+  preset (`CLASSIC_ROLE_IDS`). Hidden roles drop out of game setup, set suggestions and
+  the rules page; past games, statistics and running games keep them.
 - **Ids are stable English slugs** (`seer`, `village`, `witch-poison`). Databases from
   before the rename are migrated by `20261028120000_english_ids`; the mapping lives in
   `packages/shared/src/domain/legacy-ids.ts`.
@@ -117,6 +122,8 @@ gracefully for quick entries.
 - `GameEvent(gameId, seq, type, payload jsonb)`
 - `GamePlayer(gameId, playerId, roleId, roleVersion, finalFaction, isWinner, survived,
   diedRound, deathCause)`
+- `HiddenRole(roleId, hiddenAt)`: built-in roles the group has hidden; no row means
+  visible.
 - `AppState(testMode)`: in test mode, generated players and games are marked and
   removed again when it is switched off.
 

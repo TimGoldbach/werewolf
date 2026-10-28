@@ -34,12 +34,15 @@ export function DeckBuilder({
   onChange,
   playerCount,
   favoriteRoles,
+  hiddenRoles,
   children,
 }: {
   deck: string[]
   onChange: (deck: string[]) => void
   playerCount: number
   favoriteRoles: string[]
+  /** roles the group has hidden — the search leaves them out */
+  hiddenRoles?: ReadonlySet<string>
   /** space above the tiles, e.g. for ready-made set suggestions */
   children?: React.ReactNode
 }) {
@@ -131,6 +134,7 @@ export function DeckBuilder({
 
       <RoleSearch
         placeholder={t('searchPlaceholder')}
+        hiddenRoles={hiddenRoles}
         onPick={(id) => {
           add(id)
           setExtra((prev) => (prev.includes(id) ? prev : [...prev, id]))

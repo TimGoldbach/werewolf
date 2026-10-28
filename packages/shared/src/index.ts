@@ -9,6 +9,7 @@ export * from './dto/auth.js'
 export * from './dto/player.js'
 export * from './dto/game.js'
 export * from './dto/dev.js'
+export * from './dto/role-visibility.js'
 export * from './dto/errors.js'
 
 // Events (event-sourcing envelope)

@@ -16,6 +16,7 @@ import liveTable from './liveTable.json'
 import leaderboard from './leaderboard.json'
 import stats from './stats.json'
 import playerStats from './playerStats.json'
+import roleSettings from './roleSettings.json'
 import type { Messages } from '../en'
 
 // Typed against the English messages: a missing key is a type error.
@@ -38,6 +39,7 @@ const messages: Messages = {
   leaderboard,
   stats,
   playerStats,
+  roleSettings,
 }
 
 export default messages

@@ -101,7 +101,9 @@ export function sortRoles(roleIds: string[], popularity: Map<string, number> = n
   })
 }
 
-export function buildSetupHints(games: GameListItem[]): SetupHints {
+/** @param hiddenRoleIds roles the group has hidden — never offered in the quick-pick */
+export function buildSetupHints(games: GameListItem[], hiddenRoleIds: string[] = []): SetupHints {
+  const hidden = new Set(hiddenRoleIds)
   const sorted = [...games].sort((a, b) => b.playedAt.localeCompare(a.playedAt))
 
   // Regulars: participations in the most recent games, ties broken by who played most recently.
@@ -140,10 +142,10 @@ export function buildSetupHints(games: GameListItem[]): SetupHints {
   const played = [...popularity.keys()]
     .filter((id) => !FILLER_ROLES.includes(id))
     .sort((a, b) => popularity.get(b)! - popularity.get(a)!)
-  const picked = [...FILLER_ROLES, ...played].slice(0, FAVORITE_LIMIT)
+  const picked = [...FILLER_ROLES, ...played].filter((id) => !hidden.has(id)).slice(0, FAVORITE_LIMIT)
   for (const id of CLASSIC_ROLES) {
     if (picked.length >= FAVORITE_LIMIT) break
-    if (!picked.includes(id)) picked.push(id)
+    if (!picked.includes(id) && !hidden.has(id)) picked.push(id)
   }
 
   return { playerOrder, recentLineups, favoriteRoles: sortRoles(picked, popularity) }

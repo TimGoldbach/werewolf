@@ -57,6 +57,7 @@
     "categoriesLabel": "Role categories",
     "noMatch": "No role matches “{query}”.",
     "aliases": "also: {names}",
+    "hiddenNote": "{count, plural, one {# role} other {# roles}} this group doesn't play {count, plural, one {is} other {are}} hidden.",
     "wake": {
       "first": "1st night",
       "every": "every night",

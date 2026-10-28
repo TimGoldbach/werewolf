@@ -1,3 +1,4 @@
+import type { RoleVisibility } from '@werewolf/shared'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { SESSION_EXPIRED_PATH } from './session'
@@ -36,4 +37,14 @@ export async function serverFetch<T>(path: string, init?: RequestInit): Promise<
 export async function isAuthenticated(): Promise<boolean> {
   const data = await serverFetch<{ authenticated: boolean }>('/auth/session')
   return data.authenticated
+}
+
+/**
+ * Roles the group has hidden (public endpoint, so the rules page can use it too). Hiding only
+ * tidies up lists: if the query fails, every role stays visible.
+ */
+export async function fetchHiddenRoleIds(): Promise<string[]> {
+  return serverFetch<RoleVisibility>('/role-visibility')
+    .then((v) => v.hiddenRoleIds)
+    .catch((): string[] => [])
 }

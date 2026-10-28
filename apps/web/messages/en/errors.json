@@ -10,6 +10,7 @@
   "UNKNOWN_PLAYERS": "Unknown player(s).",
   "DUPLICATE_PLAYERS": "A player appears more than once in the game.",
   "UNKNOWN_ROLES": "Unknown role(s).",
+  "ROLE_NOT_FOUND": "Role not found.",
   "GAME_NOT_FOUND": "Game not found.",
   "GAME_NOT_FINISHED": "This is only possible once the game is finished.",
   "GAME_ALREADY_FINISHED": "The game is already finished.",
