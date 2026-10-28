@@ -24,6 +24,45 @@
   --radius: 0.75rem;
 }
 
+/*
+ * Accent presets (ACCENT_COLOR, set as data-accent on <html>); violet is the default above.
+ * Dark presets keep white text on buttons, light ones switch to dark text. Each stays at least
+ * as readable as violet: about 4.5:1 for button text and 4.3:1 as text on the background.
+ */
+[data-accent='blood'] {
+  --primary: 352 70% 53%;
+  --accent: 352 50% 22%;
+  --ring: 352 70% 53%;
+}
+
+[data-accent='moon'] {
+  --primary: 46 95% 68%;
+  --primary-foreground: 240 10% 4%;
+  --accent: 46 45% 18%;
+  --ring: 46 95% 68%;
+}
+
+[data-accent='forest'] {
+  --primary: 142 55% 45%;
+  --primary-foreground: 240 10% 4%;
+  --accent: 142 40% 18%;
+  --ring: 142 55% 45%;
+}
+
+[data-accent='amber'] {
+  --primary: 30 95% 55%;
+  --primary-foreground: 240 10% 4%;
+  --accent: 30 60% 20%;
+  --ring: 30 95% 55%;
+}
+
+[data-accent='silver'] {
+  --primary: 220 14% 72%;
+  --primary-foreground: 240 10% 4%;
+  --accent: 220 15% 22%;
+  --ring: 220 14% 72%;
+}
+
 * {
   border-color: hsl(var(--border));
 }

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Volume2, VolumeX } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
+import { BrandIcon, useAppName, useBranding } from '@/components/branding'
 import { Icon } from '@/components/pixel/icons'
 import { PixelIcon } from '@/components/pixel/pixel-icon'
 import { Button } from '@/components/ui/button'
@@ -156,7 +157,8 @@ function DaySky() {
  */
 export function HomeHero({ initialNight }: { initialNight: boolean }) {
   const t = useTranslations('home.hero')
-  const tc = useTranslations('common')
+  const appName = useAppName()
+  const { tagline } = useBranding()
   const [night, setNight] = useState(initialNight)
   const [soundOn, setSoundOn] = useState(true)
 
@@ -213,11 +215,11 @@ export function HomeHero({ initialNight }: { initialNight: boolean }) {
             night ? 'font-medium text-primary' : 'font-semibold text-amber-100',
           )}
         >
-          <Icon name={night ? 'wolf' : 'sun'} size={16} /> {night ? t('nightFalls') : t('dayBreaks')}
+          {night ? <BrandIcon size={16} /> : <Icon name="sun" size={16} />} {night ? t('nightFalls') : t('dayBreaks')}
         </span>
-        <h1 className="font-pixel text-2xl leading-snug text-foreground sm:text-3xl">{tc('appName')}</h1>
+        <h1 className="font-pixel text-2xl leading-snug text-foreground sm:text-3xl">{appName}</h1>
         <p className={cn('text-sm sm:text-base', night ? 'text-muted-foreground' : 'text-white/90')}>
-          {t('tagline')}
+          {tagline ?? t('tagline')}
         </p>
         <div className="mt-2 flex flex-wrap gap-2">
           <Link href="/games/new">

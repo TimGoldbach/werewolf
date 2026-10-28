@@ -103,8 +103,15 @@ Only the web app is exposed; it forwards `/api` to the API internally.
 | `DEFAULT_LOCALE` | Default language, `en` (default) or `de` |
 | `TIME_ZONE` | IANA time zone of the group, default `UTC` |
 | `IMPRINT_URL` | Optional imprint/legal notice link in the footer |
+| `GROUP_NAME` | Optional group name shown instead of "Werewolves" (nav, login, home page, tab title, app icon name); the same in every language |
+| `GROUP_TAGLINE` | Optional subtitle on the home page |
+| `ACCENT_COLOR` | Accent colour: `violet` (default), `blood`, `moon`, `forest`, `amber` or `silver` |
 | `BACKUP_RETENTION_DAYS` | Days to keep nightly backups, default `14` |
 | `IMAGE_PREFIX` / `IMAGE_TAG` | Which container images to run |
+
+For an own logo, put `logo.svg` or `logo.png` (square works best) into `instance/branding/`.
+It replaces the pixel wolf and becomes the favicon and app icon; without one the app keeps
+its default look.
 
 Wrong passwords are throttled: after 10 failed logins from one client within 15
 minutes, further attempts are refused until the window ends.
