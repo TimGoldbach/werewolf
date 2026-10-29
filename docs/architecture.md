@@ -142,6 +142,13 @@ so plain `docker compose` works.
   - the Docker network of an existing proxy
 
   Only the web app is exposed. `SECURE_COOKIES` is off only for plain-HTTP setups.
+- **Branding:** `GROUP_NAME`, `GROUP_TAGLINE` and `ACCENT_COLOR` are runtime variables of
+  the web container, read per request (`apps/web/src/lib/branding.ts`), so one image
+  serves every instance. The name is the same in every language and falls back to the
+  translated app name. Each accent preset is a `[data-accent]` block in `globals.css`
+  that overrides the primary, accent and ring colours. `instance/branding/` is mounted
+  read-only at `/app/branding`; a `logo.svg` or `logo.png` there is served by the
+  `/branding/logo` route and replaces the pixel wolf, the favicon and the manifest icon.
 - **Login throttling:** wrong passwords are counted per client IP. The API trusts
   `X-Forwarded-For` from private networks, which Caddy sets; in LAN mode all devices
   share one counter.

@@ -72,3 +72,36 @@ jobs:
             --to-schema-datamodel prisma/schema.prisma \
             --exit-code \
           || { echo "::error::schema.prisma differs from the migrations – did you forget 'pnpm --filter @werewolf/api prisma:migrate'?"; exit 1; }
+
+  self-hosting:
+    name: Self-hosting setup (CLI, LAN mode)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GROUP_PASSWORD: ci-full-moon-42
+    steps:
+      - uses: actions/checkout@v7
+      # Only Node: the launcher has to install the CLI's dependencies on its own, like on a fresh server.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Set up a LAN instance non-interactively
+        run: ./werewolf setup --mode lan --port 8080 --name "CI Pack" --tagline "Every night" --accent forest --lang en --time-zone Europe/Berlin --password "$GROUP_PASSWORD" --build --yes
+      - name: The app answers and the password works
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error http://127.0.0.1:8080/api/health
+          curl --fail --silent --show-error --output /dev/null http://127.0.0.1:8080/login
+          code=$(curl --silent --output /dev/null --write-out '%{http_code}' -H 'Content-Type: application/json' \
+            -d '{"password":"wrong-password"}' http://127.0.0.1:8080/api/auth/login)
+          [ "$code" = 401 ] || { echo "::error::wrong password returned $code"; exit 1; }
+          curl --fail --silent --show-error --cookie-jar cookies.txt -H 'Content-Type: application/json' \
+            -d "{\"password\":\"$GROUP_PASSWORD\"}" http://127.0.0.1:8080/api/auth/login
+          curl --fail --silent --show-error --cookie cookies.txt http://127.0.0.1:8080/api/auth/session | grep -q '"authenticated":true'
+      - name: Status
+        run: ./werewolf status
+      - name: Stop
+        run: ./werewolf stop
+      - name: Logs on failure
+        if: failure()
+        run: docker compose logs --tail 200 || true

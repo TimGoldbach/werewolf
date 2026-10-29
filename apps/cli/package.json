@@ -1,0 +1,25 @@
+{
+  "name": "@werewolf/cli",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Setup and operations CLI for self-hosted werewolf instances (run via ./werewolf)",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node src/index.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test \"src/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.8.1",
+    "bcryptjs": "^3.0.3",
+    "picocolors": "^1.1.1",
+    "uqr": "^0.1.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3"
+  }
+}

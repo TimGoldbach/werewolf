@@ -16,6 +16,7 @@ COPY pnpm-workspace.yaml package.json pnpm-lock.yaml .npmrc turbo.json tsconfig.
 COPY packages/shared/package.json packages/shared/
 COPY apps/web/package.json apps/web/
 COPY apps/api/package.json apps/api/
+COPY apps/cli/package.json apps/cli/
 RUN pnpm install --frozen-lockfile
 COPY packages/shared packages/shared
 COPY apps/web apps/web
