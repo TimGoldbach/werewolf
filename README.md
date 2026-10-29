@@ -119,6 +119,8 @@ Then open http://localhost:3000 and log in with the `GATE_PASSWORD` from `apps/a
   `main`: typecheck, tests, build, all Prisma migrations against an empty Postgres
   (including a check that `schema.prisma` has no missing migration), and an end-to-end run
   of the CLI (setup, backup, restore, uninstall) with Docker.
+  [pr-title.yml](.github/workflows/pr-title.yml) checks that the pull request title is a
+  Conventional Commit, because it becomes the squash commit on `main`.
 - **Releases** ([release.yml](.github/workflows/release.yml)) use
   [release-please](https://github.com/googleapis/release-please): it keeps a release PR
   with the next version and `CHANGELOG.md` up to date from the Conventional Commits on
