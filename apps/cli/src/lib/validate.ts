@@ -13,6 +13,7 @@ export type Problem =
   | 'url'
   | 'passwordShort'
   | 'passwordLong'
+  | 'retention'
 
 export const MAX_GROUP_NAME = 60
 export const MAX_TAGLINE = 120
@@ -93,4 +94,15 @@ export function validatePassword(value: string): Problem | undefined {
   if (value.length < MIN_PASSWORD) return 'passwordShort'
   if (Buffer.byteLength(value, 'utf8') > MAX_PASSWORD_BYTES) return 'passwordLong'
   return undefined
+}
+
+export const MAX_RETENTION_DAYS = 3650
+
+export function parseRetention(value: string): number | undefined {
+  const days = Number(value.trim())
+  return Number.isInteger(days) && days >= 1 && days <= MAX_RETENTION_DAYS ? days : undefined
+}
+
+export function validateRetention(value: string): Problem | undefined {
+  return parseRetention(value) === undefined ? 'retention' : undefined
 }

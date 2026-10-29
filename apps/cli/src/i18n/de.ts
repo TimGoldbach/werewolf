@@ -52,6 +52,10 @@ export const de: Messages = {
     stop: 'Instanz stoppen (Daten bleiben erhalten)',
     restart: 'Alle Container neu starten und Änderungen an instance/.env übernehmen',
     link: 'Den Befehl werewolf in den PATH legen',
+    update: 'Auf das neueste Release aktualisieren (vorher Backup, bei Fehler zurück)',
+    backup: 'Die Datenbank jetzt sichern',
+    restore: 'Die Datenbank aus einem Backup wiederherstellen',
+    uninstall: 'Container und Daten-Volume entfernen (vorher Backup, instance/ bleibt)',
   },
 
   flags: {
@@ -77,6 +81,10 @@ export const de: Messages = {
     tail: 'Anzahl der Zeilen pro Dienst zu Beginn (Standard 100)',
     linkDir: 'Verzeichnis in deinem PATH (Standard ~/.local/bin)',
     linkRemove: 'Den Link wieder entfernen',
+    to: 'Zielversion, z. B. v1.2.0 (Standard: das neueste Release)',
+    forceDowngrade: 'Zurück auf eine ältere Version erlauben',
+    file: 'Backup-Datei (ein Name in instance/backups oder ein Pfad)',
+    backupRetention: 'Tage, die Backups aufbewahrt werden (Standard 14)',
   },
 
   invalid: {
@@ -91,6 +99,7 @@ export const de: Messages = {
     url: 'Gib einen vollständigen Link mit https:// ein (oder lass das Feld leer).',
     passwordShort: 'Bitte mindestens 8 Zeichen.',
     passwordLong: 'Höchstens 72 Byte; bcrypt ignoriert alles danach.',
+    retention: 'Gib eine Anzahl Tage zwischen 1 und 3650 ein.',
   },
 
   invalidFlag: (flag, value, problem) => `--${flag} „${value}“: ${problem}`,
@@ -241,6 +250,7 @@ export const de: Messages = {
     passwordMismatch: 'Die Passwörter stimmen nicht überein.',
     imprint: 'Link zu eurem Impressum (optional)',
     imprintPlaceholder: 'https://example.org/impressum',
+    retention: 'Wie viele Tage sollen Backups aufbewahrt werden?',
   },
 
   domainCheck: {
@@ -293,6 +303,7 @@ export const de: Messages = {
       access: 'Zugang (Domain, Proxy, LAN)',
       timeZone: 'Zeitzone',
       imprint: 'Impressums-Link',
+      backups: 'Aufbewahrung der Backups',
     },
     passwordHint: (bin) => `Das Gruppenpasswort änderst du mit ${bin} password.`,
     nothing: 'Nichts geändert.',
@@ -319,7 +330,9 @@ export const de: Messages = {
     title: 'Status',
     version: 'Version',
     images: 'Images',
-    imagesLocal: 'lokal gebaut',
+    imagesLocal: (tag) => `lokal gebaut (${tag})`,
+    update: 'Update',
+    updateAvailable: (tag) => `${tag} ist verfügbar`,
     mode: 'Zugang',
     url: 'URL',
     containers: 'Container',
@@ -365,6 +378,88 @@ export const de: Messages = {
     notOnPath: (dir) =>
       `${dir} ist noch nicht in deinem PATH. Ergänze diese Zeile in deinem Shell-Profil:`,
     usage: 'Ab jetzt kannst du werewolf aus jedem Verzeichnis aufrufen, z. B.',
+  },
+
+  backups: {
+    creating: 'Sichere die Datenbank',
+    created: (path, size) => `Backup gespeichert: ${path} (${size})`,
+    failed: 'Das Backup ist fehlgeschlagen, daher wurde nichts weiter gemacht.',
+    retention: (days) =>
+      `Backups, die älter als ${days} Tage sind, werden automatisch gelöscht (./werewolf config ändert das).`,
+    stoppingApi: 'Stoppe die API',
+    apiStopped: 'API gestoppt',
+    restoring: (name) => `Stelle ${name} wieder her`,
+    restored: (name) => `Datenbank aus ${name} wiederhergestellt`,
+    restoreFailed: 'Die Wiederherstellung der Datenbank ist fehlgeschlagen.',
+    fallbackRestored: (name) => `Die vorherigen Daten wurden aus ${name} zurückgespielt.`,
+    fallbackFailed: (name) =>
+      `Auch das Zurückspielen der vorherigen Daten aus ${name} ist fehlgeschlagen; stelle sie von Hand wieder her.`,
+    kinds: {
+      nightly: 'nächtlich',
+      manual: 'manuell',
+      'pre-update': 'vor Update',
+      'pre-restore': 'vor Wiederherstellung',
+      'pre-uninstall': 'vor Deinstallation',
+      other: 'importiert',
+    },
+  },
+
+  restore: {
+    pick: 'Welches Backup soll wiederhergestellt werden?',
+    overwrites: (name) =>
+      `Das ersetzt alle aktuellen Daten (Spieler, Spiele, Einstellungen) durch ${name}.`,
+    confirm: 'Die aktuellen Daten überschreiben?',
+    done: (safety) => `Wiederhergestellt. Die Daten von vorher liegen in ${safety}.`,
+    notFound: (file) => `Backup „${file}“ nicht gefunden.`,
+    notABackup: (file) => `„${file}“ ist kein Backup (.sql oder .sql.gz).`,
+    none: (dir) => `In ${dir} gibt es noch keine Backups.`,
+  },
+
+  uninstall: {
+    what: (instance) =>
+      `Das entfernt die Container, das Netzwerk und das Datenbank-Volume. ${instance}/ mit der Konfiguration und allen Backups bleibt.`,
+    confirm: 'Die Instanz deinstallieren?',
+    removing: 'Entferne Container, Netzwerk und Volumes',
+    removed: 'Container, Netzwerk und Volumes entfernt',
+    kept: 'Behalten (Konfiguration und alle Backups)',
+    reinstall: 'Neu installieren',
+    removeAll: 'Alles entfernen',
+    done: 'Deinstalliert. Danke fürs Spielen! 🐺',
+  },
+
+  update: {
+    dirty: 'Dieser Checkout hat lokale Änderungen und kann die Version so nicht sicher wechseln.',
+    dirtyHint:
+      'Committe, stashe oder verwirf sie (git stash / git checkout -- <datei>) und starte das Update dann erneut.',
+    fetching: 'Suche nach neuen Versionen',
+    fetched: 'Versionen geladen',
+    fetchFailed: 'Das Laden der Versionen von GitHub ist fehlgeschlagen.',
+    noReleases: 'Es gibt noch keine Releases.',
+    upToDate: (tag) => `Schon auf ${tag}.`,
+    downgrade: (from, to) => `${to} ist älter als das installierte ${from}.`,
+    downgradeHint:
+      'Datenbank-Migrationen gehen nur vorwärts; zurück geht es nur mit einem Backup dieser Version. Mit --force geht es trotzdem.',
+    unknownTag: (tag) => `Es gibt keine Version ${tag}.`,
+    newestIs: (tag) => `Das neueste Release ist ${tag}.`,
+    changesTitle: (from, to) => `Änderungen ${from} → ${to}`,
+    noChangelog: 'Keine Changelog-Einträge für diesen Bereich.',
+    moreChanges: (count) => `… und ${count} weitere Zeilen in CHANGELOG.md`,
+    confirm: (tag) => `Auf ${tag} aktualisieren?`,
+    checkingOut: (tag) => `Wechsle den Checkout auf ${tag}`,
+    checkedOut: (tag) => `Checkout steht auf ${tag}`,
+    checkoutFailed: 'Der Wechsel des Checkouts ist fehlgeschlagen.',
+    nothingChanged: (from) => `Es wurde nichts geändert; die Instanz läuft weiter mit ${from}.`,
+    starting: 'Starte die neue Version (jetzt laufen die Migrationen)',
+    started: 'Die neue Version läuft',
+    failed: 'Die neue Version ist nicht gesund hochgekommen.',
+    rollingBack: (from) => `Rolle zurück auf ${from}`,
+    rolledBack: (from) => `Das Update ist fehlgeschlagen und wurde auf ${from} zurückgerollt.`,
+    rolledBackHint: (bin) =>
+      `Deine Daten sind wie vor dem Update. In ${bin} logs siehst du, was schiefging.`,
+    rollbackFailed: 'Auch das Zurückrollen ist fehlgeschlagen.',
+    manualRollback: (ref, backup, bin) =>
+      `Von Hand zurückrollen: git checkout ${ref}, dann ${bin} restore --file ${backup}`,
+    done: (from, to) => `Aktualisiert von ${from} auf ${to}`,
   },
 
   modeNames: {

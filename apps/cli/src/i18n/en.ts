@@ -1,5 +1,6 @@
 import type { CheckId, CheckReason } from '../lib/system.ts'
 import type { LogoProblem } from '../lib/logo.ts'
+import type { BackupKind } from '../lib/backups.ts'
 import type { Problem } from '../lib/validate.ts'
 
 export const en = {
@@ -54,6 +55,10 @@ export const en = {
     stop: 'Stop the instance (data is kept)',
     restart: 'Restart all containers and apply changes to instance/.env',
     link: 'Put the werewolf command on your PATH',
+    update: 'Update to the newest release (backup first, rollback on failure)',
+    backup: 'Back up the database now',
+    restore: 'Restore the database from a backup',
+    uninstall: 'Remove containers and data volume (backup first, instance/ stays)',
   },
 
   flags: {
@@ -79,6 +84,10 @@ export const en = {
     tail: 'Number of lines per service to show first (default 100)',
     linkDir: 'Directory on your PATH (default ~/.local/bin)',
     linkRemove: 'Remove the link again',
+    to: 'Version to update to, e.g. v1.2.0 (default: the newest release)',
+    forceDowngrade: 'Allow going back to an older version',
+    file: 'Backup file (a name in instance/backups or a path)',
+    backupRetention: 'Days to keep backups (default 14)',
   },
 
   invalid: {
@@ -93,6 +102,7 @@ export const en = {
     url: 'Enter a full link starting with https:// (or leave it empty).',
     passwordShort: 'At least 8 characters, please.',
     passwordLong: 'At most 72 bytes; bcrypt ignores everything after that.',
+    retention: 'Enter a number of days between 1 and 3650.',
   } satisfies Record<Problem, string>,
 
   invalidFlag: (flag: string, value: string, problem: string) => `--${flag} "${value}": ${problem}`,
@@ -241,6 +251,7 @@ export const en = {
     passwordMismatch: 'The passwords do not match.',
     imprint: 'Link to your imprint/legal notice (optional)',
     imprintPlaceholder: 'https://example.org/imprint',
+    retention: 'Keep backups for how many days?',
   },
 
   domainCheck: {
@@ -293,6 +304,7 @@ export const en = {
       access: 'Access mode (domain, proxy, LAN)',
       timeZone: 'Time zone',
       imprint: 'Imprint link',
+      backups: 'How long backups are kept',
     },
     passwordHint: (bin: string) => `The group password is changed with ${bin} password.`,
     nothing: 'Nothing changed.',
@@ -319,7 +331,9 @@ export const en = {
     title: 'Status',
     version: 'Version',
     images: 'Images',
-    imagesLocal: 'built locally',
+    imagesLocal: (tag: string) => `built locally (${tag})`,
+    update: 'Update',
+    updateAvailable: (tag: string) => `${tag} is available`,
     mode: 'Access',
     url: 'URL',
     containers: 'Containers',
@@ -366,6 +380,88 @@ export const en = {
     notOnPath: (dir: string) =>
       `${dir} is not on your PATH yet. Add this line to your shell profile:`,
     usage: 'From now on you can run werewolf from any directory, e.g.',
+  },
+
+  backups: {
+    creating: 'Backing up the database',
+    created: (path: string, size: string) => `Backup saved: ${path} (${size})`,
+    failed: 'The backup failed, so nothing else was done.',
+    retention: (days: number) =>
+      `Backups older than ${days} days are deleted automatically (./werewolf config changes that).`,
+    stoppingApi: 'Stopping the API',
+    apiStopped: 'API stopped',
+    restoring: (name: string) => `Restoring ${name}`,
+    restored: (name: string) => `Database restored from ${name}`,
+    restoreFailed: 'Restoring the database failed.',
+    fallbackRestored: (name: string) => `The previous data was put back from ${name}.`,
+    fallbackFailed: (name: string) =>
+      `Putting the previous data back from ${name} failed as well; restore it by hand.`,
+    kinds: {
+      nightly: 'nightly',
+      manual: 'manual',
+      'pre-update': 'before update',
+      'pre-restore': 'before restore',
+      'pre-uninstall': 'before uninstall',
+      other: 'imported',
+    } satisfies Record<BackupKind, string>,
+  },
+
+  restore: {
+    pick: 'Which backup should be restored?',
+    overwrites: (name: string) =>
+      `This replaces all current data (players, games, settings) with ${name}.`,
+    confirm: 'Overwrite the current data?',
+    done: (safety: string) => `Restored. The data from before is in ${safety}.`,
+    notFound: (file: string) => `Backup "${file}" not found.`,
+    notABackup: (file: string) => `"${file}" is not a backup (.sql or .sql.gz).`,
+    none: (dir: string) => `There are no backups in ${dir} yet.`,
+  },
+
+  uninstall: {
+    what: (instance: string) =>
+      `This removes the containers, the network and the database volume. ${instance}/ with the configuration and all backups stays.`,
+    confirm: 'Uninstall the instance?',
+    removing: 'Removing containers, network and volumes',
+    removed: 'Containers, network and volumes removed',
+    kept: 'Kept (configuration and all backups)',
+    reinstall: 'Reinstall',
+    removeAll: 'Remove everything',
+    done: 'Uninstalled. Thanks for playing! 🐺',
+  },
+
+  update: {
+    dirty: 'This checkout has local changes, so it cannot switch versions safely.',
+    dirtyHint:
+      'Commit, stash or discard them (git stash / git checkout -- <file>), then run the update again.',
+    fetching: 'Looking for new versions',
+    fetched: 'Versions fetched',
+    fetchFailed: 'Fetching the versions from GitHub failed.',
+    noReleases: 'There are no releases yet.',
+    upToDate: (tag: string) => `Already on ${tag}.`,
+    downgrade: (from: string, to: string) => `${to} is older than the installed ${from}.`,
+    downgradeHint:
+      'Database migrations only go forward, so going back needs a backup from that version. Add --force if you really want it.',
+    unknownTag: (tag: string) => `There is no version ${tag}.`,
+    newestIs: (tag: string) => `The newest release is ${tag}.`,
+    changesTitle: (from: string, to: string) => `Changes ${from} → ${to}`,
+    noChangelog: 'No changelog entries for this range.',
+    moreChanges: (count: number) => `… and ${count} more lines in CHANGELOG.md`,
+    confirm: (tag: string) => `Update to ${tag}?`,
+    checkingOut: (tag: string) => `Switching the checkout to ${tag}`,
+    checkedOut: (tag: string) => `Checkout is on ${tag}`,
+    checkoutFailed: 'Switching the checkout failed.',
+    nothingChanged: (from: string) => `Nothing was changed; the instance still runs ${from}.`,
+    starting: 'Starting the new version (migrations run now)',
+    started: 'New version is running',
+    failed: 'The new version did not come up healthy.',
+    rollingBack: (from: string) => `Rolling back to ${from}`,
+    rolledBack: (from: string) => `The update failed and was rolled back to ${from}.`,
+    rolledBackHint: (bin: string) =>
+      `Your data is as before the update. Look at ${bin} logs to see what went wrong.`,
+    rollbackFailed: 'The rollback failed as well.',
+    manualRollback: (ref: string, backup: string, bin: string) =>
+      `Roll back by hand: git checkout ${ref}, then ${bin} restore --file ${backup}`,
+    done: (from: string, to: string) => `Updated from ${from} to ${to}`,
   },
 
   modeNames: {

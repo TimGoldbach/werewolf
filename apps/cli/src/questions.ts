@@ -37,6 +37,8 @@ import {
   validateOptionalUrl,
   validatePassword,
   validatePort,
+  validateRetention,
+  parseRetention,
   validateTagline,
   validateTimeZone,
 } from './lib/validate.ts'
@@ -495,4 +497,18 @@ export async function askImprint(ctx: Context, current: string): Promise<string>
     }),
   )
   return value.trim()
+}
+
+export async function askRetention(ctx: Context, current: number): Promise<number> {
+  const flag = flagValue(ctx, 'backup-retention', validateRetention)
+  if (flag !== undefined) return parseRetention(flag) as number
+  if (!ctx.interactive) return current
+  const value = unwrap(
+    await p.text({
+      message: ctx.m.q.retention,
+      initialValue: String(current),
+      validate: check(ctx, validateRetention),
+    }),
+  )
+  return parseRetention(value) as number
 }
