@@ -14,6 +14,7 @@ const base: Settings = {
   proxyNetwork: '',
   timeZone: 'Europe/Berlin',
   imprintUrl: '',
+  backupRetentionDays: 14,
 }
 
 describe('settingsToEnv', () => {

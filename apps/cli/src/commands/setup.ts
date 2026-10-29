@@ -30,6 +30,7 @@ import { spinner } from '../lib/progress.ts'
 import {
   ACCENTS,
   DEFAULT_ACCENT,
+  DEFAULT_RETENTION_DAYS,
   DEFAULT_WEB_PORT,
   type Settings,
   settingsToEnv,
@@ -122,6 +123,7 @@ export const setup: Command = {
       ...access,
       timeZone,
       imprintUrl,
+      backupRetentionDays: DEFAULT_RETENTION_DAYS,
     }
 
     const plan = await planImages(ctx)

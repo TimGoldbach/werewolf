@@ -94,11 +94,15 @@ any other commit, or with `--build`, it builds them from the checkout.
 | Command | Effect |
 | --- | --- |
 | `./werewolf setup` | Set up a new instance |
-| `./werewolf config` | Change name, tagline, colour, logo, mode, language, time zone or imprint; restarts what is affected |
+| `./werewolf config` | Change name, tagline, colour, logo, mode, language, time zone, imprint or backup retention; restarts what is affected |
 | `./werewolf password` | Set a new group password; ends all sessions |
 | `./werewolf status` | Version, container health, URL and latest backup |
 | `./werewolf logs [-f] [service…]` | Logs of web and api (or `db`, `backup`, `caddy`, `all`) |
 | `./werewolf start` / `stop` / `restart` | Start, stop, or recreate the containers (`restart` applies edits to `instance/.env`) |
+| `./werewolf update [--to vX.Y.Z]` | Update to the newest release (or the given one); shows the changelog, backs up first and rolls back if the new version does not come up |
+| `./werewolf backup` | Back up the database now |
+| `./werewolf restore [file]` | Restore the database from a backup (pick one from a list without `file`); backs up the current data first |
+| `./werewolf uninstall` | Back up, then remove containers, network and the database volume; `instance/` stays |
 | `./werewolf link` | Put `werewolf` on your PATH (a link in `~/.local/bin`) |
 
 Every command also runs without questions when you pass flags and `--yes`, e.g. for scripts:
@@ -111,6 +115,24 @@ Every command also runs without questions when you pass flags and `--yes`, e.g. 
 
 `./werewolf <command> --help` lists all options.
 
+### Updates and backups
+
+`./werewolf update` fetches the release tags, shows the `CHANGELOG.md` entries between the
+installed and the new version and asks before it changes anything. It then backs up the
+database, checks out the release tag, pulls its images (or builds them, like `setup`), starts
+the stack, which applies the migrations, and checks that the app answers. If the new version
+does not come up healthy, it checks out the previous version again, runs the previous images
+and restores the database from the backup it just took, because migrations only go forward.
+The update refuses to run while tracked files in the checkout have local changes.
+`./werewolf status` mentions when a newer release is available.
+
+Backups are gzipped `pg_dump` files in `instance/backups/`: a nightly one (`werewolf-…`),
+`manual-…` from `./werewolf backup`, and `pre-update-…`, `pre-restore-…` and
+`pre-uninstall-…` taken automatically. All of them are kept for `BACKUP_RETENTION_DAYS`
+(default 14, change it with `./werewolf config --backup-retention <days>`). `restore` stops the
+API, replaces the database, starts everything again (migrations bring an older backup up to
+date) and checks that the app answers. If the restore fails, it puts the previous data back.
+
 ### Instance data
 
 Everything that belongs to one installation lives in `instance/` (ignored by git): `.env` with
@@ -119,7 +141,7 @@ configuration and secrets, `branding/` with the logo, `backups/`, and Caddy's ce
 in a Docker volume.
 
 Migrations run when the API starts. The `backup` service writes a daily `pg_dump` to
-`instance/backups/` and keeps `BACKUP_RETENTION_DAYS` (default 14) days.
+`instance/backups/` and deletes backups older than `BACKUP_RETENTION_DAYS` (default 14) days.
 
 ### Manual setup
 

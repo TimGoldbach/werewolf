@@ -1,11 +1,15 @@
+import { backup } from './backup.ts'
 import { config } from './config.ts'
 import { restart, start, stop } from './lifecycle.ts'
 import { link } from './link.ts'
 import { logs } from './logs.ts'
 import { password } from './password.ts'
+import { restore } from './restore.ts'
 import { setup } from './setup.ts'
 import { status } from './status.ts'
 import type { Command } from './types.ts'
+import { uninstall } from './uninstall.ts'
+import { update } from './update.ts'
 
 /** All commands, in help order. A new command is a module plus an entry here. */
 export const commands: Command[] = [
@@ -17,6 +21,10 @@ export const commands: Command[] = [
   start,
   stop,
   restart,
+  update,
+  backup,
+  restore,
+  uninstall,
   link,
 ]
 

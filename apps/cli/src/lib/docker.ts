@@ -70,23 +70,6 @@ export async function isServiceRunning(service: string): Promise<boolean> {
   return (await composePs()).some((c) => c.service === service && c.state === 'running')
 }
 
-/** The release tag checked out at HEAD (e.g. v1.2.0), if HEAD is exactly on one. */
-export async function releaseTag(): Promise<string | undefined> {
-  const result = await run('git', ['describe', '--tags', '--exact-match', 'HEAD'], {
-    cwd: paths.root,
-  })
-  const tag = result.stdout.trim()
-  return result.code === 0 && /^v\d+\.\d+\.\d+/.test(tag) ? tag : undefined
-}
-
-/** Human-readable version of the checkout, e.g. v1.2.0 or v1.2.0-3-gabc1234. */
-export async function checkoutVersion(): Promise<string | undefined> {
-  const result = await run('git', ['describe', '--tags', '--always', '--dirty'], {
-    cwd: paths.root,
-  })
-  return result.code === 0 ? result.stdout.trim() : undefined
-}
-
 /** A database volume left over from an earlier installation (its password would not match). */
 export async function databaseVolumeExists(): Promise<boolean> {
   const result = await run('docker', [

@@ -96,13 +96,15 @@ services:
       PGDATABASE: ${POSTGRES_DB:-werewolf}
     volumes:
       - ./instance/backups:/backups
+    # Nightly dumps; the retention applies to all backups, including the CLI's manual,
+    # pre-update, pre-restore and pre-uninstall ones.
     entrypoint:
       - sh
       - -c
       - >
         while true; do
         pg_dump | gzip > /backups/werewolf-$$(date +%Y%m%d-%H%M%S).sql.gz;
-        find /backups -name 'werewolf-*.sql.gz' -mtime +${BACKUP_RETENTION_DAYS:-14} -delete;
+        find /backups -name '*.sql.gz' -mtime +${BACKUP_RETENTION_DAYS:-14} -delete;
         sleep 86400;
         done
 
