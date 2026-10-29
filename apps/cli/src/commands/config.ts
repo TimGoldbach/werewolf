@@ -17,6 +17,7 @@ import {
   askImprint,
   askLocale,
   askLogo,
+  askRetention,
   askTagline,
   askTimeZone,
   hasAnyFlag,
@@ -25,7 +26,7 @@ import {
 } from '../questions.ts'
 import { type Command, type Context, forceOption, settingOptions, yesOption } from './types.ts'
 
-type Section = 'language' | 'branding' | 'access' | 'timeZone' | 'imprint'
+type Section = 'language' | 'branding' | 'access' | 'timeZone' | 'imprint' | 'backups'
 
 /** Which flags belong to a section, and which env keys it writes. */
 const SECTIONS: Record<Section, { flags: string[]; keys: string[] }> = {
@@ -40,6 +41,7 @@ const SECTIONS: Record<Section, { flags: string[]; keys: string[] }> = {
   },
   timeZone: { flags: ['time-zone'], keys: ['TIME_ZONE'] },
   imprint: { flags: ['imprint'], keys: ['IMPRINT_URL'] },
+  backups: { flags: ['backup-retention'], keys: ['BACKUP_RETENTION_DAYS'] },
 }
 const SECTION_NAMES = Object.keys(SECTIONS) as Section[]
 
@@ -47,7 +49,17 @@ export const config: Command = {
   name: 'config',
   group: 'setup',
   summary: (m) => m.commands.config,
-  options: [...settingOptions, yesOption, forceOption],
+  options: [
+    ...settingOptions,
+    {
+      name: 'backup-retention',
+      type: 'string',
+      value: '<days>',
+      description: (m) => m.flags.backupRetention,
+    },
+    yesOption,
+    forceOption,
+  ],
   examples: [
     'config',
     'config --accent blood --name "Moonlight Pack" --yes',
@@ -98,6 +110,9 @@ export async function runConfig(ctx: Context, options: { embedded?: boolean } = 
   }
   if (sections.includes('timeZone')) next.timeZone = await askTimeZone(ask(), current.timeZone)
   if (sections.includes('imprint')) next.imprintUrl = await askImprint(ask(), current.imprintUrl)
+  if (sections.includes('backups')) {
+    next.backupRetentionDays = await askRetention(ask(), current.backupRetentionDays)
+  }
 
   const updates = changedValues(env, settingsToEnv(next), sections)
   const changedKeys = Object.keys(updates)

@@ -74,7 +74,7 @@ jobs:
           || { echo "::error::schema.prisma differs from the migrations – did you forget 'pnpm --filter @werewolf/api prisma:migrate'?"; exit 1; }
 
   self-hosting:
-    name: Self-hosting setup (CLI, LAN mode)
+    name: Self-hosting (CLI setup, backup, restore, uninstall)
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
@@ -100,8 +100,49 @@ jobs:
           curl --fail --silent --show-error --cookie cookies.txt http://127.0.0.1:8080/api/auth/session | grep -q '"authenticated":true'
       - name: Status
         run: ./werewolf status
+      - name: Back up, delete a game, restore it
+        run: |
+          set -euo pipefail
+          api=http://127.0.0.1:8080/api
+          json=(-H 'Content-Type: application/json')
+          curl --fail --silent --show-error --cookie-jar cookies.txt "${json[@]}" \
+            -d "{\"password\":\"$GROUP_PASSWORD\"}" "$api/auth/login" >/dev/null
+          ids=()
+          for name in Ada Bea Cem; do
+            ids+=("$(curl --fail --silent --show-error --cookie cookies.txt "${json[@]}" \
+              -d "{\"displayName\":\"$name\"}" "$api/players" | jq -r .id)")
+          done
+          game_body=$(jq -n --arg a "${ids[0]}" --arg b "${ids[1]}" --arg c "${ids[2]}" '{
+            winningCondition: "village",
+            players: [
+              { playerId: $a, roleId: "werewolf", isWinner: false },
+              { playerId: $b, roleId: "villager", isWinner: true },
+              { playerId: $c, roleId: "seer", isWinner: true }
+            ]
+          }')
+          game=$(curl --fail --silent --show-error --cookie cookies.txt "${json[@]}" -d "$game_body" \
+            "$api/games/quick" | jq -r .id)
+
+          ./werewolf backup
+          backup=$(ls -t instance/backups/manual-*.sql.gz | head -1)
+
+          curl --fail --silent --show-error --cookie cookies.txt -X DELETE "$api/games/$game" >/dev/null
+          code=$(curl --silent --output /dev/null --write-out '%{http_code}' --cookie cookies.txt "$api/games/$game")
+          [ "$code" = 404 ] || { echo "::error::deleted game still answers $code"; exit 1; }
+
+          ./werewolf restore --file "$backup" --yes
+          curl --fail --silent --show-error --cookie cookies.txt "$api/games/$game" | jq -e --arg id "$game" '.id == $id'
       - name: Stop
         run: ./werewolf stop
+      - name: Uninstall keeps a backup and removes the containers
+        run: |
+          set -euo pipefail
+          ./werewolf uninstall --yes
+          ls -l instance/backups/pre-uninstall-*.sql.gz
+          [ -z "$(docker compose ps --all --quiet)" ] || { echo "::error::containers left"; exit 1; }
+          if docker volume inspect werewolf_pgdata >/dev/null 2>&1; then
+            echo "::error::database volume left"; exit 1
+          fi
       - name: Logs on failure
         if: failure()
         run: docker compose logs --tail 200 || true
