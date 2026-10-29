@@ -62,24 +62,73 @@ Then open http://localhost:3000 and log in with the `GATE_PASSWORD` from `apps/a
 
 ## Self-hosting
 
-Requirements: Docker with Compose v2. A setup CLI that does all of the following
-interactively is on its way; until then the steps are manual.
-
-Everything that belongs to one installation lives in `instance/` (ignored by git):
-`.env` with configuration and secrets, `backups/`, and Caddy's certificates. Postgres
-data stays in a Docker volume.
+Requirements: Docker with Compose v2, git and Node.js ≥ 22.18 (the CLI is TypeScript that
+Node runs directly). Release images exist for amd64 and arm64.
 
 ```bash
 git clone https://github.com/TimGoldbach/werewolf.git && cd werewolf
-mkdir -p instance && cp .env.example instance/.env && ln -s instance/.env .env
-# edit instance/.env (see below), then:
-docker compose up -d
+./werewolf setup
 ```
+
+`setup` checks the system, then asks a few questions: language, group name and tagline,
+accent colour, an optional logo, how the app is reached, time zone, the group password (your
+own or a generated one like `vollmond-heult-37`) and an optional imprint link. After a summary
+it writes `instance/.env`, gets the images, starts everything, checks that the app answers and
+shows the URL and the password. On its first run, `./werewolf` installs only the CLI's few
+dependencies, not the web and API toolchain.
+
+On a release tag (`git checkout v1.0.0`) the setup pulls the matching images from GHCR; on
+any other commit, or with `--build`, it builds them from the checkout.
+
+### How the app is reached
+
+| Mode | Use it for |
+| --- | --- |
+| `domain` | Your own domain. A bundled Caddy gets TLS certificates automatically. The setup checks that the domain points at the server and that ports 80/443 are free. |
+| `proxy` | A reverse proxy that already runs on the server (nginx, Traefik, Caddy, …). The app listens on `127.0.0.1:<port>` or joins the proxy's Docker network; the CLI prints example configurations. |
+| `lan` | The local network over plain HTTP, e.g. on a Raspberry Pi (port 8080 by default). The CLI shows a QR code for phones. |
+
+### Commands
+
+| Command | Effect |
+| --- | --- |
+| `./werewolf setup` | Set up a new instance |
+| `./werewolf config` | Change name, tagline, colour, logo, mode, language, time zone or imprint; restarts what is affected |
+| `./werewolf password` | Set a new group password; ends all sessions |
+| `./werewolf status` | Version, container health, URL and latest backup |
+| `./werewolf logs [-f] [service…]` | Logs of web and api (or `db`, `backup`, `caddy`, `all`) |
+| `./werewolf start` / `stop` / `restart` | Start, stop, or recreate the containers (`restart` applies edits to `instance/.env`) |
+| `./werewolf link` | Put `werewolf` on your PATH (a link in `~/.local/bin`) |
+
+Every command also runs without questions when you pass flags and `--yes`, e.g. for scripts:
+
+```bash
+./werewolf setup --mode lan --name "Kiez" --password "vollmond-heult-37" --yes
+./werewolf setup --mode domain --domain werewolf.example.org --lang en --yes
+./werewolf config --accent blood --yes
+```
+
+`./werewolf <command> --help` lists all options.
+
+### Instance data
+
+Everything that belongs to one installation lives in `instance/` (ignored by git): `.env` with
+configuration and secrets, `branding/` with the logo, `backups/`, and Caddy's certificates.
+`instance/.env` is linked to `./.env`, so plain `docker compose` works too. Postgres data stays
+in a Docker volume.
 
 Migrations run when the API starts. The `backup` service writes a daily `pg_dump` to
 `instance/backups/` and keeps `BACKUP_RETENTION_DAYS` (default 14) days.
 
-### How the app is reached
+### Manual setup
+
+Without the CLI, create the instance yourself:
+
+```bash
+mkdir -p instance/backups instance/branding && cp .env.example instance/.env && ln -s instance/.env .env
+# edit instance/.env (see below), then:
+docker compose up -d
+```
 
 `COMPOSE_FILE` combines the core `docker-compose.yml` with one overlay from `compose/`.
 Only the web app is exposed; it forwards `/api` to the API internally.

@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# Launcher for the werewolf CLI (apps/cli). Checks Node, installs the CLI's few
+# dependencies on first use and runs the TypeScript sources directly.
+set -euo pipefail
+
+# Resolve symlinks (./werewolf link puts one on the PATH) to find the checkout.
+source="${BASH_SOURCE[0]}"
+while [ -L "$source" ]; do
+  dir="$(cd -P "$(dirname "$source")" && pwd)"
+  source="$(readlink "$source")"
+  [[ "$source" != /* ]] && source="$dir/$source"
+done
+root="$(cd -P "$(dirname "$source")" && pwd)"
+cli="$root/apps/cli"
+
+if [ -t 2 ] && [ -z "${NO_COLOR:-}" ]; then
+  red=$'\033[31m' bold=$'\033[1m' dim=$'\033[2m' reset=$'\033[0m'
+else
+  red='' bold='' dim='' reset=''
+fi
+
+fail() {
+  printf '%s✖%s %s\n' "$red" "$reset" "$1" >&2
+  shift
+  for line in "$@"; do printf '  %s\n' "$line" >&2; done
+  exit 1
+}
+
+# Node >= 22.18 runs TypeScript natively (type stripping).
+install_hints=(
+  "Install it with your package manager or from https://nodejs.org, for example:"
+  "${dim}nvm:${reset}      nvm install 22"
+  "${dim}fnm:${reset}      fnm install 22"
+  "${dim}Debian/Ubuntu:${reset} https://github.com/nodesource/distributions"
+  "${dim}macOS:${reset}    brew install node@22"
+)
+if ! command -v node >/dev/null 2>&1; then
+  fail "${bold}Node.js 22.18 or newer is required${reset}, but node was not found." "${install_hints[@]}"
+fi
+node_version="$(node -p 'process.versions.node')"
+IFS=. read -r major minor _ <<<"$node_version"
+if [ "$major" -lt 22 ] || { [ "$major" -eq 22 ] && [ "$minor" -lt 18 ]; }; then
+  fail "${bold}Node.js 22.18 or newer is required${reset}, found $node_version." "${install_hints[@]}"
+fi
+
+# First run (or after an update changed the CLI's dependencies): install only the CLI's
+# dependencies, not the whole web/api toolchain.
+stamp="$cli/node_modules/.werewolf-cli-deps"
+wanted="$(cksum <"$cli/package.json")"
+deps_ok() {
+  [ "$(cat "$stamp" 2>/dev/null)" = "$wanted" ] || return 1
+  local name
+  for name in $(node -p 'Object.keys(require(process.argv[1]).dependencies ?? {}).join(" ")' "$cli/package.json"); do
+    [ -e "$cli/node_modules/$name/package.json" ] || [ -e "$root/node_modules/$name/package.json" ] || return 1
+  done
+}
+if ! deps_ok; then
+  printf '%s▸ Installing the CLI dependencies…%s\n' "$dim" "$reset" >&2
+  if command -v pnpm >/dev/null 2>&1; then
+    pnpm=(pnpm)
+  elif command -v corepack >/dev/null 2>&1; then
+    pnpm=(corepack pnpm)
+  else
+    pnpm_version="$(node -p 'require(process.argv[1]).packageManager.split("@")[1]' "$root/package.json")"
+    pnpm=(npx --yes "pnpm@$pnpm_version")
+  fi
+  export COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+  if ! (cd "$root" && "${pnpm[@]}" install --filter @werewolf/cli --frozen-lockfile >&2); then
+    fail "Installing the CLI dependencies failed." "Try: cd $root && ${pnpm[*]} install --filter @werewolf/cli"
+  fi
+  printf '%s\n' "$wanted" >"$stamp"
+fi
+
+export WEREWOLF_ARGV0="$0"
+exec node --disable-warning=ExperimentalWarning "$cli/src/index.ts" "$@"

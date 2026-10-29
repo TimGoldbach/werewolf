@@ -13,6 +13,7 @@ COPY pnpm-workspace.yaml package.json pnpm-lock.yaml .npmrc turbo.json tsconfig.
 COPY packages/shared/package.json packages/shared/
 COPY apps/api/package.json apps/api/
 COPY apps/web/package.json apps/web/
+COPY apps/cli/package.json apps/cli/
 # Only api + its workspace dependencies (without Next & co.)
 RUN pnpm install --frozen-lockfile --filter @werewolf/api...
 COPY packages/shared packages/shared
