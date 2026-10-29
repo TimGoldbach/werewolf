@@ -132,6 +132,7 @@ gracefully for quick entries.
 An installation is a git checkout plus an `instance/` directory (ignored by git) that
 holds `.env`, backups and Caddy's certificates; `.env` is linked to the repository root
 so plain `docker compose` works.
+How to run one: [cli.md](./cli.md) and [self-hosting.md](./self-hosting.md).
 
 - **Core stack** (`docker-compose.yml`): web, api, Postgres and a backup container
   (daily `pg_dump`, `BACKUP_RETENTION_DAYS`). The API applies migrations when it

@@ -29,6 +29,7 @@ export const OVERLAYS = {
 } as const
 
 export const DEFAULT_WEB_PORT = 8080
+export const DEFAULT_RETENTION_DAYS = 14
 
 /** Everything the setup asks for, except the password and the logo file. */
 export interface Settings {
@@ -44,6 +45,7 @@ export interface Settings {
   proxyNetwork: string
   timeZone: string
   imprintUrl: string
+  backupRetentionDays: number
 }
 
 export function isLocale(value: string): value is Locale {
@@ -71,6 +73,7 @@ export function settingsToEnv(settings: Settings): EnvValues {
     ACCENT_COLOR: settings.accent,
     TIME_ZONE: settings.timeZone,
     IMPRINT_URL: settings.imprintUrl,
+    BACKUP_RETENTION_DAYS: String(settings.backupRetentionDays),
     DOMAIN: settings.mode === 'lan' ? '' : settings.domain,
     PROXY_NETWORK: '',
     WEB_BIND: '0.0.0.0',
@@ -109,6 +112,7 @@ export function settingsFromEnv(env: EnvValues): Settings {
     proxyVia = 'network'
   } else if (env.WEB_BIND === '127.0.0.1') mode = 'proxy'
   const port = Number.parseInt(env.WEB_PORT ?? '', 10)
+  const retention = Number.parseInt(env.BACKUP_RETENTION_DAYS ?? '', 10)
   return {
     locale: isLocale(env.DEFAULT_LOCALE ?? '') ? (env.DEFAULT_LOCALE as Locale) : 'en',
     groupName: env.GROUP_NAME ?? '',
@@ -121,6 +125,7 @@ export function settingsFromEnv(env: EnvValues): Settings {
     proxyNetwork: env.PROXY_NETWORK ?? '',
     timeZone: env.TIME_ZONE || 'UTC',
     imprintUrl: env.IMPRINT_URL ?? '',
+    backupRetentionDays: retention > 0 ? retention : DEFAULT_RETENTION_DAYS,
   }
 }
 

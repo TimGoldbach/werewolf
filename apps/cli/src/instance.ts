@@ -5,9 +5,10 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import * as p from '@clack/prompts'
 import type { Context } from './commands/types.ts'
 import { booleanFlag } from './commands/types.ts'
-import { compose, readInstanceEnv, releaseTag, waitForApp } from './lib/docker.ts'
+import { compose, readInstanceEnv, waitForApp } from './lib/docker.ts'
 import { type EnvValues, updateEnv } from './lib/env-file.ts'
 import { CliError } from './lib/errors.ts'
+import { releaseTag, shortSha } from './lib/git.ts'
 import { httpStatus, lanAddress, sleep } from './lib/net.ts'
 import { paths } from './lib/paths.ts'
 import { tail } from './lib/proc.ts'
@@ -66,18 +67,28 @@ export interface ImagePlan {
   tag: string
 }
 
-/** Local builds get their own tag, so a later pull of a release never mixes with them. */
-export const LOCAL_TAG = 'local'
+/**
+ * Local builds are tagged with their commit (local-abc1234): a later pull of a release never
+ * mixes with them, and an update can roll back to the previous build.
+ */
+export async function localTag(): Promise<string> {
+  const sha = await shortSha()
+  return sha ? `local-${sha}` : 'local'
+}
+
+export function isLocalTag(tag: string): boolean {
+  return tag === 'local' || tag.startsWith('local-')
+}
 
 /**
  * Release checkouts pull the matching images; anything else builds, because there are no
  * images for arbitrary commits. --build and --pull override this.
  */
 export async function planImages(ctx: Context): Promise<ImagePlan> {
-  if (booleanFlag(ctx, 'build')) return { source: 'build', tag: LOCAL_TAG }
+  if (booleanFlag(ctx, 'build')) return { source: 'build', tag: await localTag() }
   const tag = await releaseTag()
   if (booleanFlag(ctx, 'pull')) return { source: 'pull', tag: tag ?? 'latest' }
-  return tag ? { source: 'pull', tag } : { source: 'build', tag: LOCAL_TAG }
+  return tag ? { source: 'pull', tag } : { source: 'build', tag: await localTag() }
 }
 
 /** Pulls or builds the images. Returns the plan that was actually carried out. */
@@ -91,7 +102,7 @@ export async function prepareImages(ctx: Context, plan: ImagePlan): Promise<Imag
       return plan
     }
     spin.error(ctx.m.setup.pullFailed)
-    plan = { source: 'build', tag: LOCAL_TAG }
+    plan = { source: 'build', tag: await localTag() }
     setImageTag(plan.tag)
   }
 
@@ -116,7 +127,7 @@ export async function prepareImages(ctx: Context, plan: ImagePlan): Promise<Imag
   return plan
 }
 
-function setImageTag(tag: string): void {
+export function setImageTag(tag: string): void {
   writeFileSync(paths.env, updateEnv(readFileSync(paths.env, 'utf8'), { IMAGE_TAG: tag }))
 }
 
