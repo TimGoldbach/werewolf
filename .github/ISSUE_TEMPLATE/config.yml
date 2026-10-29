@@ -1,0 +1,4 @@
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/TimGoldbach/werewolf/security/advisories/new
+    about: Please report security issues privately, not as a public issue.

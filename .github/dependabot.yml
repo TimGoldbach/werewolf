@@ -1,0 +1,33 @@
+version: 2
+
+# Docker base images (node:22-slim, postgres:16-alpine, caddy:2-alpine) use floating
+# tags that pick up patches on every image build. The only updates Dependabot could
+# offer there are major versions, and a Postgres major needs a dump and restore, so
+# those stay manual.
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    # Security updates ignore the cooldown; regular updates wait until a release has
+    # been public for a week.
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns: ['*']

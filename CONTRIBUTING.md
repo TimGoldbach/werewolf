@@ -5,6 +5,8 @@ Thanks for helping out! Bug reports, role ideas and pull requests are all welcom
 - **Found a bug?** Open a [bug report][bug-report].
 - **Have an idea for a role but don't want to code it?** Open a
   [role proposal][role-proposal]. Someone can turn it into a pull request.
+- **Found a security issue?** Report it privately, as described in the
+  [security policy](./SECURITY.md).
 - **Want to change code?** Read on.
 
 [bug-report]: https://github.com/TimGoldbach/werewolf/issues/new?template=bug-report.yml

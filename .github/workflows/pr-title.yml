@@ -1,0 +1,27 @@
+name: PR title
+
+# Pull requests are squash-merged with their title as the commit message, and
+# release-please builds the changelog and the version from it. So the title has to be a
+# Conventional Commit.
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions: {}
+
+jobs:
+  conventional-commit:
+    name: PR title
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check that the title is a Conventional Commit
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          pattern='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9._/-]+\))?!?: [^ ].*$'
+          if [[ ! "$TITLE" =~ $pattern ]]; then
+            echo "::error::'$TITLE' is not a Conventional Commit. Use e.g. 'feat: add the lighthouse keeper role' or 'fix(live): keep the mayor after an undo' (see CONTRIBUTING.md)."
+            exit 1
+          fi
+          echo "OK: $TITLE"
