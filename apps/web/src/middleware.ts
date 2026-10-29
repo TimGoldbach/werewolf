@@ -1,7 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { SESSION_COOKIE } from '@/lib/session'
 
-const PUBLIC_PATHS = ['/login', '/rules']
+// Logo, icon and manifest are needed on the login page too, before there is a session.
+const PUBLIC_PATHS = ['/login', '/rules', '/branding', '/app-icon.svg', '/manifest.webmanifest']
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl

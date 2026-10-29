@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { BrandIcon, useAppName } from '@/components/branding'
 import { Icon } from '@/components/pixel/icons'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -12,7 +13,7 @@ import { clientFetch, useErrorText } from '@/lib/client-api'
 
 export function LoginForm() {
   const t = useTranslations('login')
-  const tc = useTranslations('common')
+  const appName = useAppName()
   const errorText = useErrorText()
   const router = useRouter()
   const [password, setPassword] = useState('')
@@ -37,8 +38,8 @@ export function LoginForm() {
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-xl">
-          <Icon name="wolf" size={30} />
-          <span className="font-pixel text-sm">{tc('appName')}</span>
+          <BrandIcon size={30} />
+          <span className="font-pixel text-sm">{appName}</span>
         </CardTitle>
         <CardDescription>{t('description')}</CardDescription>
         <div className="mt-2 flex gap-2 opacity-80">

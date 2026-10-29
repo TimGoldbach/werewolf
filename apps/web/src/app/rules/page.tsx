@@ -4,16 +4,21 @@ import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
+import { BrandIcon } from '@/components/branding'
 import { Icon } from '@/components/pixel/icons'
 import { RoleGuide } from '@/components/rules/role-guide'
 import { SiteFooter } from '@/components/site-footer'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { getBranding } from '@/lib/branding'
 import { SESSION_COOKIE } from '@/lib/session'
 import { useCatalog } from '@/lib/texts'
 
 export async function generateMetadata(): Promise<Metadata> {
   const [t, tc] = await Promise.all([getTranslations('rules'), getTranslations('common')])
-  return { title: t('metaTitle', { appName: tc('appName') }), description: t('metaDescription') }
+  return {
+    title: t('metaTitle', { appName: getBranding().name ?? tc('appName') }),
+    description: t('metaDescription'),
+  }
 }
 
 // Highlights a term inside a rules sentence (`<hl>…</hl>` in the messages).
@@ -39,6 +44,7 @@ export default function RulesPage() {
   const t = useTranslations('rules')
   const tc = useTranslations('common')
   const catalog = useCatalog()
+  const appName = getBranding().name ?? tc('appName')
   // Only for the link target: without a session, "/" goes to the login via the middleware anyway.
   const loggedIn = cookies().has(SESSION_COOKIE)
 
@@ -47,8 +53,8 @@ export default function RulesPage() {
       <header className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto flex max-w-3xl items-center justify-between gap-2 px-4 py-3">
           <span className="flex items-center gap-2">
-            <Icon name="wolf" size={22} />
-            <span className="font-pixel text-xs text-foreground">{tc('appName')}</span>
+            <BrandIcon size={22} />
+            <span className="font-pixel text-xs text-foreground">{appName}</span>
           </span>
           <Link
             href={loggedIn ? '/' : '/login'}

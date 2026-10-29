@@ -66,7 +66,13 @@ services:
       IMPRINT_URL: ${IMPRINT_URL:-}
       DEFAULT_LOCALE: ${DEFAULT_LOCALE:-en}
       TIME_ZONE: ${TIME_ZONE:-UTC}
+      GROUP_NAME: ${GROUP_NAME:-}
+      GROUP_TAGLINE: ${GROUP_TAGLINE:-}
+      ACCENT_COLOR: ${ACCENT_COLOR:-violet}
       NODE_ENV: production
+    volumes:
+      # Optional logo.svg or logo.png; without one the app keeps its pixel wolf.
+      - ./instance/branding:/app/branding:ro
     expose:
       - '3000'
     healthcheck:
