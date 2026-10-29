@@ -19,12 +19,15 @@ export function RolePalette({
   onActivate,
   assignedCounts,
   favoriteRoles,
+  hiddenRoles,
 }: {
   activeRoleId: string
   onActivate: (roleId: string) => void
   /** role → how many people already have it */
   assignedCounts: Map<string, number>
   favoriteRoles: string[]
+  /** roles the group has hidden — the search leaves them out */
+  hiddenRoles?: ReadonlySet<string>
 }) {
   const t = useTranslations('gameSetup.palette')
   const catalog = useCatalog()
@@ -76,6 +79,7 @@ export function RolePalette({
       </div>
       <RoleSearch
         placeholder={t('searchPlaceholder')}
+        hiddenRoles={hiddenRoles}
         onPick={(id) => {
           setExtra((prev) => (prev.includes(id) ? prev : [...prev, id]))
           onActivate(id)

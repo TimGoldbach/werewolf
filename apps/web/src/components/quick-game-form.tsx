@@ -59,6 +59,7 @@ export function QuickGameForm({
   editGameId,
   setSuggestions,
   hints = EMPTY_SETUP_HINTS,
+  hiddenRoleIds,
 }: {
   players: Player[]
   initial?: GameFormPrefill
@@ -68,6 +69,11 @@ export function QuickGameForm({
   setSuggestions?: SetSuggestion[]
   /** shortcuts from the game history (regular players, recent line-ups, popular roles) */
   hints?: SetupHints
+  /**
+   * Roles the group has hidden: the role search and the set suggestions leave them out. Roles
+   * already in the form (copied or edited game) stay as they are.
+   */
+  hiddenRoleIds?: string[]
 }) {
   const t = useTranslations('gameForm')
   const catalog = useCatalog()
@@ -102,6 +108,7 @@ export function QuickGameForm({
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
 
+  const hiddenRoles = useMemo(() => new Set(hiddenRoleIds), [hiddenRoleIds])
   const usedPlayerIds = useMemo(() => new Set(rows.map((r) => r.playerId)), [rows])
   const nameById = useMemo(
     () => new Map(knownPlayers.map((p) => [p.id, p.displayName])),
@@ -313,6 +320,7 @@ export function QuickGameForm({
             onActivate={setBrush}
             assignedCounts={assignedCounts}
             favoriteRoles={hints.favoriteRoles}
+            hiddenRoles={hiddenRoles}
           />
 
           <div className="flex flex-col gap-1.5">
@@ -416,10 +424,12 @@ export function QuickGameForm({
           onChange={setDeck}
           playerCount={rows.length}
           favoriteRoles={hints.favoriteRoles}
+          hiddenRoles={hiddenRoles}
         >
           {setSuggestions && (
             <SetSuggestions
               suggestions={setSuggestions}
+              hiddenRoles={hiddenRoles}
               playerCount={rows.length}
               deck={deck}
               onApply={setDeck}

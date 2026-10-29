@@ -23,32 +23,41 @@ const VISIBLE = 3
 /**
  * Set suggestions in the deck area: role combinations the group has already played with exactly this
  * number of players — sorted by frequency × feedback (see
- * `computeSetSuggestions`). A tap adopts the set as the deck.
+ * `computeSetSuggestions`). A tap adopts the set as the deck. Sets with a hidden role are left out.
  */
 export function SetSuggestions({
   suggestions,
   playerCount,
   deck,
   onApply,
+  hiddenRoles,
 }: {
   /** all sets of all player counts, already sorted */
   suggestions: SetSuggestion[]
   playerCount: number
   deck: string[]
   onApply: (roleIds: string[]) => void
+  /** roles the group has hidden */
+  hiddenRoles?: ReadonlySet<string>
 }) {
   const t = useTranslations('sets.suggestions')
   const [showAll, setShowAll] = useState(false)
-  const forCount = useMemo(
+  const played = useMemo(
     () => suggestions.filter((s) => s.playerCount === playerCount),
     [suggestions, playerCount],
+  )
+  const forCount = useMemo(
+    () => played.filter((s) => s.roleIds.every((id) => !hiddenRoles?.has(id))),
+    [played, hiddenRoles],
   )
   const deckKey = useMemo(() => roleSetKey(deck), [deck])
 
   if (playerCount < 3) return null
   if (forCount.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">{t('noneForCount', { playerCount })}</p>
+      <p className="text-sm text-muted-foreground">
+        {played.length > 0 ? t('allHidden', { playerCount }) : t('noneForCount', { playerCount })}
+      </p>
     )
   }
 

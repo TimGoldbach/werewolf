@@ -114,3 +114,10 @@ model AppState {
   testMode  Boolean  @default(false)
   updatedAt DateTime @updatedAt
 }
+
+/// Built-in roles the group has hidden from game setup and the rules page. Roles themselves
+/// live in the code catalog; this only records which ones the group does not use.
+model HiddenRole {
+  roleId   String   @id
+  hiddenAt DateTime @default(now())
+}

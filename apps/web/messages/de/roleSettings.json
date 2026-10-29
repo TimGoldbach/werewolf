@@ -1,0 +1,24 @@
+{
+  "title": "Rollen",
+  "intro": "Blende die Rollen aus, die eure Gruppe nicht spielt. Ausgeblendete Rollen verschwinden aus dem Spiel-Setup und den Regeln; alte Spiele und Statistiken behalten sie.",
+  "count": "{visible} von {total} Rollen sichtbar",
+  "presets": {
+    "classics": {
+      "label": "Nur Klassiker",
+      "hint": "Nur die {count} klassischen Grundrollen",
+      "confirm": "Alle Rollen außer den {count} Klassikern ausblenden?"
+    },
+    "all": {
+      "label": "Alle zeigen",
+      "hint": "Jede Rolle aus dem Katalog",
+      "confirm": "Alle Rollen wieder einblenden?"
+    }
+  },
+  "searchPlaceholder": "Rolle suchen …",
+  "searchLabel": "Rolle suchen",
+  "noMatch": "Keine Rolle passt zu „{query}“.",
+  "categoryCount": "{visible}/{total} sichtbar",
+  "classic": "Klassiker",
+  "toggle": "{name} anzeigen",
+  "missing": "Fehlt eine Rolle? Neue Rollen kommen mit App-Updates – <link>schlag eine auf GitHub vor</link>."
+}

@@ -1,0 +1,61 @@
+name: Role proposal
+description: Suggest a new role for the catalog, no coding needed.
+title: 'Role proposal: '
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a role! Describe it in your own words; please don't copy
+        texts from commercial rulebooks or games. See CONTRIBUTING.md for how a role
+        ends up in the app.
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      description: English name, and a German one if you have it.
+      placeholder: Lighthouse Keeper / Der Leuchtturmwärter
+    validations:
+      required: true
+  - type: dropdown
+    id: faction
+    attributes:
+      label: Faction
+      description: The side the role starts on.
+      options:
+        - Village
+        - Werewolves
+        - Solo (plays for themselves)
+        - Variable (can switch sides)
+    validations:
+      required: true
+  - type: textarea
+    id: night-action
+    attributes:
+      label: Night action
+      description: >-
+        Does the role wake at night (first night only, every night, sometimes)? What does it
+        do then? Write "none" if it never wakes.
+    validations:
+      required: true
+  - type: textarea
+    id: win-condition
+    attributes:
+      label: Win condition
+      description: How does the role win? "With the village" is a fine answer.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: >-
+        Day abilities, what happens when the role dies, interactions with other roles, how it
+        played at your table, where the idea comes from.
+  - type: checkboxes
+    id: own-words
+    attributes:
+      label: Own words
+      options:
+        - label: I wrote this description myself and did not copy it from a commercial rulebook or game.
+          required: true

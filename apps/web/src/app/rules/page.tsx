@@ -1,6 +1,5 @@
 import { WIN_CONDITION_LIST } from '@werewolf/shared'
 import type { Metadata } from 'next'
-import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
@@ -10,8 +9,9 @@ import { RoleGuide } from '@/components/rules/role-guide'
 import { SiteFooter } from '@/components/site-footer'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { getBranding } from '@/lib/branding'
+import { fetchHiddenRoleIds } from '@/lib/server-api'
 import { SESSION_COOKIE } from '@/lib/session'
-import { useCatalog } from '@/lib/texts'
+import { getCatalog } from '@/lib/texts.server'
 
 export async function generateMetadata(): Promise<Metadata> {
   const [t, tc] = await Promise.all([getTranslations('rules'), getTranslations('common')])
@@ -38,12 +38,15 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 /**
  * Public short version of the game rules — reachable without the group password. Win conditions
  * and roles come straight from the catalogue in @werewolf/shared, so text and game logic don't
- * drift apart.
+ * drift apart. Roles the group has hidden are left out of the role guide.
  */
-export default function RulesPage() {
-  const t = useTranslations('rules')
-  const tc = useTranslations('common')
-  const catalog = useCatalog()
+export default async function RulesPage() {
+  const [t, tc, catalog, hiddenRoleIds] = await Promise.all([
+    getTranslations('rules'),
+    getTranslations('common'),
+    getCatalog(),
+    fetchHiddenRoleIds(),
+  ])
   const appName = getBranding().name ?? tc('appName')
   // Only for the link target: without a session, "/" goes to the login via the middleware anyway.
   const loggedIn = cookies().has(SESSION_COOKIE)
@@ -142,7 +145,7 @@ export default function RulesPage() {
           <h2 className="flex items-center gap-2 text-xl font-semibold">
             <Icon name="crystal" size={22} /> {t('allRoles')}
           </h2>
-          <RoleGuide />
+          <RoleGuide hiddenRoleIds={hiddenRoleIds} />
         </section>
       </main>
       <SiteFooter />

@@ -16,18 +16,29 @@ export function FactionStripe({ roleId }: { roleId: string }) {
   return <span aria-hidden className={cn('w-1 shrink-0 self-stretch', faction && FACTION_TONE[faction].dot)} />
 }
 
-/** Search a role in the full catalogue (120+ roles) — for everything beyond the quick selection. */
-export function RoleSearch({ onPick, placeholder }: { onPick: (roleId: string) => void; placeholder: string }) {
+/**
+ * Search a role in the catalogue (120+ roles) — for everything beyond the quick selection.
+ * Roles the group has hidden are not offered.
+ */
+export function RoleSearch({
+  onPick,
+  placeholder,
+  hiddenRoles,
+}: {
+  onPick: (roleId: string) => void
+  placeholder: string
+  hiddenRoles?: ReadonlySet<string>
+}) {
   const t = useTranslations('gameSetup.roleSearch')
   const catalog = useCatalog()
   // Names and aliases of the active language.
   const options = useMemo<SearchOption[]>(
     () =>
-      ROLE_CATALOG.map((r) => {
+      ROLE_CATALOG.filter((r) => !hiddenRoles?.has(r.id)).map((r) => {
         const text = roleText(catalog, r.id)
         return { value: r.id, label: text.name, group: r.category, keywords: text.aliases?.join(' ') }
       }),
-    [catalog],
+    [catalog, hiddenRoles],
   )
   return (
     <SearchSelect

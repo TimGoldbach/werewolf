@@ -57,6 +57,7 @@
     "categoriesLabel": "Rollen-Kategorien",
     "noMatch": "Keine Rolle passt zu „{query}\".",
     "aliases": "auch: {names}",
+    "hiddenNote": "{count, plural, one {# Rolle, die diese Gruppe nicht spielt, ist} other {# Rollen, die diese Gruppe nicht spielt, sind}} ausgeblendet.",
     "wake": {
       "first": "1. Nacht",
       "every": "jede Nacht",

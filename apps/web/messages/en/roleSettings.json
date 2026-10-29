@@ -1,0 +1,24 @@
+{
+  "title": "Roles",
+  "intro": "Hide the roles your group doesn't play. Hidden roles disappear from game setup and the rules page; past games and statistics keep them.",
+  "count": "{visible} of {total} roles visible",
+  "presets": {
+    "classics": {
+      "label": "Classics only",
+      "hint": "Just the {count} classic base roles",
+      "confirm": "Hide every role except the {count} classics?"
+    },
+    "all": {
+      "label": "Show all",
+      "hint": "Every role in the catalog",
+      "confirm": "Show all roles again?"
+    }
+  },
+  "searchPlaceholder": "Search roles…",
+  "searchLabel": "Search roles",
+  "noMatch": "No role matches “{query}”.",
+  "categoryCount": "{visible}/{total} visible",
+  "classic": "Classic",
+  "toggle": "Show {name}",
+  "missing": "Missing a role? New roles come with app updates — <link>suggest one on GitHub</link>."
+}

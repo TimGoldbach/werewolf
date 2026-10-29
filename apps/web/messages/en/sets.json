@@ -1,6 +1,7 @@
 {
   "suggestions": {
     "noneForCount": "You haven't played a set with {playerCount} players yet — after your first game it will show up here as a suggestion.",
+    "allHidden": "Every set you have played with {playerCount} players uses a role your group has hidden.",
     "title": "Your sets for {playerCount} players",
     "info": "Sorted by games × feedback: at ⌀ ★★★ every game counts once, each star more doubles it, each star fewer halves it.",
     "showLess": "Show fewer",

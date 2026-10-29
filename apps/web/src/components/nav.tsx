@@ -13,6 +13,7 @@ const LINKS = [
   { href: '/players', labelKey: 'players' },
   { href: '/games', labelKey: 'games' },
   { href: '/stats', labelKey: 'stats' },
+  { href: '/roles', labelKey: 'roles' },
 ] as const
 
 export function Nav() {

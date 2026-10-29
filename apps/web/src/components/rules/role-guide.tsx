@@ -1,61 +1,34 @@
 'use client'
 
-import {
-  ROLE_CATALOG,
-  roleText,
-  type CatalogTexts,
-  type Locale,
-  type RoleCategory,
-  type RoleDef,
-} from '@werewolf/shared'
+import { ROLE_CATALOG, roleText, type RoleDef } from '@werewolf/shared'
 import { useTranslations } from 'next-intl'
 import * as React from 'react'
 import { RoleIcon } from '@/components/pixel/icons'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
+import { groupRoles, roleMatches } from '@/lib/role-list'
 import { useAppLocale, useCatalog } from '@/lib/texts'
 
-const CATEGORY_ORDER: RoleCategory[] = ['werewolves', 'villagers', 'ambiguous', 'loners']
+const NONE_HIDDEN: string[] = []
 
-/** "Der einfache Werwolf" → "einfache Werwolf": alphabetical, ignoring the German article. */
-function sortKey(name: string, locale: Locale): string {
-  return locale === 'de' ? name.replace(/^(der|die|das)\s+/i, '') : name
-}
-
-function matches(texts: CatalogTexts, role: RoleDef, query: string): boolean {
-  const { name, aliases, description } = roleText(texts, role.id)
-  const hay = `${name} ${aliases?.join(' ') ?? ''} ${description}`.toLowerCase()
-  return query
-    .toLowerCase()
-    .split(/\s+/)
-    .filter(Boolean)
-    .every((t) => hay.includes(t))
-}
-
-/** All roles of the catalogue with a short description — searchable by name, alias and text. */
-export function RoleGuide() {
+/**
+ * The roles of the catalogue with a short description — searchable by name, alias and text.
+ * Roles the group has hidden on the roles page are left out.
+ */
+export function RoleGuide({ hiddenRoleIds = NONE_HIDDEN }: { hiddenRoleIds?: string[] }) {
   const t = useTranslations('rules.roleGuide')
   const catalog = useCatalog()
   const locale = useAppLocale()
   const [query, setQuery] = React.useState('')
   const q = query.trim()
 
-  const grouped = React.useMemo(
-    () =>
-      CATEGORY_ORDER.map((category) => ({
-        category,
-        roles: ROLE_CATALOG.filter((r) => r.category === category).sort((a, b) =>
-          sortKey(roleText(catalog, a.id).name, locale).localeCompare(
-            sortKey(roleText(catalog, b.id).name, locale),
-            locale,
-          ),
-        ),
-      })),
-    [catalog, locale],
-  )
+  const grouped = React.useMemo(() => {
+    const hidden = new Set(hiddenRoleIds)
+    return groupRoles(catalog, locale, ROLE_CATALOG.filter((r) => !hidden.has(r.id)))
+  }, [catalog, locale, hiddenRoleIds])
   const groups = grouped.map((g) => ({
     ...g,
-    roles: q ? g.roles.filter((r) => matches(catalog, r, q)) : g.roles,
+    roles: q ? g.roles.filter((r) => roleMatches(catalog, r, q)) : g.roles,
   }))
   const hits = groups.reduce((n, g) => n + g.roles.length, 0)
 
@@ -88,6 +61,10 @@ export function RoleGuide() {
           ))}
         </nav>
       </div>
+
+      {hiddenRoleIds.length > 0 && (
+        <p className="text-sm text-muted-foreground">{t('hiddenNote', { count: hiddenRoleIds.length })}</p>
+      )}
 
       {hits === 0 && <p className="text-sm text-muted-foreground">{t('noMatch', { query: q })}</p>}
 

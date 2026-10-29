@@ -18,6 +18,7 @@ statistics for players, roles and factions.
 - **One shared password** for the group, no user accounts.
 
 Architecture and design decisions: [docs/architecture.md](./docs/architecture.md).
+Want to help or add a role? See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Stack
 

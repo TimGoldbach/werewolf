@@ -17,6 +17,7 @@ import liveTable from './liveTable.json'
 import leaderboard from './leaderboard.json'
 import stats from './stats.json'
 import playerStats from './playerStats.json'
+import roleSettings from './roleSettings.json'
 
 const messages = {
   common,
@@ -37,6 +38,7 @@ const messages = {
   leaderboard,
   stats,
   playerStats,
+  roleSettings,
 }
 
 export default messages

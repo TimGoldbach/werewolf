@@ -9,6 +9,7 @@ import { GamesModule } from './games/games.module'
 import { HealthModule } from './health/health.module'
 import { PlayersModule } from './players/players.module'
 import { PrismaModule } from './prisma/prisma.module'
+import { RoleVisibilityModule } from './role-visibility/role-visibility.module'
 import { StatsModule } from './stats/stats.module'
 
 @Module({
@@ -20,6 +21,7 @@ import { StatsModule } from './stats/stats.module'
     PlayersModule,
     GamesModule,
     StatsModule,
+    RoleVisibilityModule,
     HealthModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: AuthGuard }],

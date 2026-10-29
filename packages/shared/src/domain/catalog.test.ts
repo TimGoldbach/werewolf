@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { ARCHETYPES, isArchetype } from './archetypes.js'
 import { FACTIONS } from './factions.js'
 import {
+  CLASSIC_ROLE_IDS,
   FIRST_NIGHT_ORDER,
   getRole,
   REGULAR_NIGHT_ORDER,
@@ -62,29 +63,10 @@ describe('ROLE_CATALOG integrity', () => {
   })
 
   it('still contains all classic base roles (stable IDs)', () => {
-    const legacy = [
-      'werewolf',
-      'accursed-wolf-father',
-      'big-bad-wolf',
-      'white-werewolf',
-      'pied-piper',
-      'angel',
-      'wild-child',
-      'wolf-hound',
-      'cupid',
-      'seer',
-      'two-sisters',
-      'little-girl',
-      'fox',
-      'rusty-sword-knight',
-      'elder',
-      'witch',
-      'bear-tamer',
-      'hunter',
-      'mayor',
-      'villager',
-    ]
-    for (const id of legacy) expect(getRole(id), `Role "${id}" is missing from the catalog`).toBeDefined()
+    expect(new Set(CLASSIC_ROLE_IDS).size).toBe(CLASSIC_ROLE_IDS.length)
+    for (const id of CLASSIC_ROLE_IDS) {
+      expect(getRole(id), `Role "${id}" is missing from the catalog`).toBeDefined()
+    }
   })
 })
 
