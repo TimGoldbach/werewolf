@@ -20,7 +20,7 @@ export class ApiError extends Error {
  * parallel with the layout and would otherwise be logged as server errors before its redirect.
  */
 export async function serverFetch<T>(path: string, init?: RequestInit): Promise<T> {
-  const cookie = headers().get('cookie') ?? ''
+  const cookie = (await headers()).get('cookie') ?? ''
   const res = await fetch(`${API}${path}`, {
     ...init,
     headers: { 'content-type': 'application/json', cookie, ...(init?.headers ?? {}) },

@@ -5,10 +5,11 @@ import type { LiveState } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
 
-export default async function LiveGamePage({ params }: { params: { id: string } }) {
+export default async function LiveGamePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   let state: LiveState
   try {
-    state = await serverFetch<LiveState>(`/games/${params.id}/state`)
+    state = await serverFetch<LiveState>(`/games/${id}/state`)
   } catch (e) {
     if (e instanceof ApiError && e.status === 404) notFound()
     throw e

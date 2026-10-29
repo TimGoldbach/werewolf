@@ -10,17 +10,18 @@ import { formatDecimal, formatPercent } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 
-export default async function PlayerStatsPage({ params }: { params: { id: string } }) {
+export default async function PlayerStatsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const t = await getTranslations('playerStats')
   const catalog = await getCatalog()
   const format = await getFormatter()
   const [data, players] = await Promise.all([
     serverFetch<{ entry: LeaderboardEntry | null; roleStats: PlayerRoleStat[] }>(
-      `/stats/players/${params.id}`,
+      `/stats/players/${id}`,
     ),
     serverFetch<Player[]>('/players?includeArchived=true'),
   ])
-  const name = players.find((p) => p.id === params.id)?.displayName ?? t('unknownPlayer')
+  const name = players.find((p) => p.id === id)?.displayName ?? t('unknownPlayer')
   const { entry, roleStats } = data
 
   return (

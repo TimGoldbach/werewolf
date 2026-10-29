@@ -14,7 +14,7 @@ export interface SearchOption {
 }
 
 /** closes on a click outside or on Escape */
-function useDismiss(ref: React.RefObject<HTMLElement>, open: boolean, onClose: () => void) {
+function useDismiss(ref: React.RefObject<HTMLElement | null>, open: boolean, onClose: () => void) {
   React.useEffect(() => {
     if (!open) return
     function onDown(e: MouseEvent) {

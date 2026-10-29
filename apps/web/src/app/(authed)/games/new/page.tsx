@@ -11,11 +11,12 @@ export const dynamic = 'force-dynamic'
 export default async function NewGamePage({
   searchParams,
 }: {
-  searchParams: { copy?: string | string[] }
+  searchParams: Promise<{ copy?: string | string[] }>
 }) {
   const t = await getTranslations('games.new')
   // "Copy": prefill the form with the same people + roles (the outcome stays empty).
-  const copyId = typeof searchParams.copy === 'string' ? searchParams.copy : undefined
+  const { copy } = await searchParams
+  const copyId = typeof copy === 'string' ? copy : undefined
   // For a copy, load archived players too, so earlier participants show up by name.
   const [players, setSuggestions, games, hiddenRoleIds] = await Promise.all([
     serverFetch<Player[]>(copyId ? '/players?includeArchived=true' : '/players'),

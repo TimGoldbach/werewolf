@@ -11,11 +11,12 @@ import type { GameListItem } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
 
-export default async function EditGamePage({ params }: { params: { id: string } }) {
+export default async function EditGamePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const t = await getTranslations('games.edit')
   let game: GameListItem
   try {
-    game = await serverFetch<GameListItem>(`/games/${params.id}`)
+    game = await serverFetch<GameListItem>(`/games/${id}`)
   } catch (e) {
     if (e instanceof ApiError && e.status === 404) notFound()
     throw e

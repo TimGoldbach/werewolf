@@ -1,6 +1,8 @@
 import type { Messages } from '../messages'
 
-declare global {
+declare module 'next-intl' {
   // Typed translation keys for next-intl
-  interface IntlMessages extends Messages {}
+  interface AppConfig {
+    Messages: Messages
+  }
 }

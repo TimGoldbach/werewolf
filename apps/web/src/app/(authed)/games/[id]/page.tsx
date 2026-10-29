@@ -22,14 +22,15 @@ function factionBadge(catalog: CatalogTexts, f: Faction | null) {
   return <Badge variant={variant}>{catalog.factions[f]}</Badge>
 }
 
-export default async function GameDetailPage({ params }: { params: { id: string } }) {
+export default async function GameDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const t = await getTranslations('games')
   const catalog = await getCatalog()
   const locale = await getAppLocale()
   const format = await getFormatter()
   let game: GameListItem
   try {
-    game = await serverFetch<GameListItem>(`/games/${params.id}`)
+    game = await serverFetch<GameListItem>(`/games/${id}`)
   } catch (e) {
     if (e instanceof ApiError && e.status === 404) notFound()
     throw e
