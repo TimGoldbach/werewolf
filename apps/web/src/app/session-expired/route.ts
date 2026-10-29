@@ -8,7 +8,8 @@ export const dynamic = 'force-dynamic'
  * Target for an invalid session (e.g. signed with an old SESSION_SECRET, or expired): delete the cookie,
  * then go to /login. Going straight to /login wouldn't work – the middleware sends everyone with a cookie back to /.
  */
-export function GET() {
-  cookies().delete(SESSION_COOKIE)
+export async function GET() {
+  const cookieStore = await cookies()
+  cookieStore.delete(SESSION_COOKIE)
   redirect('/login')
 }

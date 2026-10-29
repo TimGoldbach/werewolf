@@ -49,7 +49,7 @@ export default async function RulesPage() {
   ])
   const appName = getBranding().name ?? tc('appName')
   // Only for the link target: without a session, "/" goes to the login via the middleware anyway.
-  const loggedIn = cookies().has(SESSION_COOKIE)
+  const loggedIn = (await cookies()).has(SESSION_COOKIE)
 
   return (
     <div className="min-h-screen">
