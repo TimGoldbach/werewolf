@@ -31,6 +31,11 @@ git checkout "$(git tag --sort=-v:refname | head -1)"   # the newest release
 ./werewolf setup
 ```
 
+<p align="center">
+  <img src="./docs/assets/setup-demo.gif" width="640"
+    alt="./werewolf setup asks for language, group name, colour, mode and password, then starts the instance and shows its URL, the password and a QR code">
+</p>
+
 `setup` checks the system, then asks a few questions: language, group name and tagline, accent
 colour, an optional logo, how the app is reached, time zone, the group password (your own or a
 generated one like `vollmond-heult-37`) and an optional imprint link. It writes the
